@@ -4,7 +4,6 @@ import {User} from "@nextui-org/user";
 
 export default async function UserDetail(){
     const session = await getServerSession();
-    console.log(session);
 
     return (
         <User

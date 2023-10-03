@@ -1,0 +1,174 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                 String  @id
+  providerAccountId  String
+  access_token       String?
+  expires_at         Int?
+  id_token           String?
+  oauth_token        String?
+  oauth_token_secret String?
+  provider           String
+  refresh_token      String?
+  scope              String?
+  session_state      String?
+  token_type         String?
+  type               String
+  userId             String
+  User               User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Exercise {
+  id                  String                @id
+  name                String
+  aliases             String[]
+  primary_muscles     Muscle[]
+  secondary_muscles   Muscle[]
+  force               ForceType?
+  level               LevelType
+  mechanic            MechanicType?
+  equipment           EquipmentType?
+  category            CategoryType
+  instructions        String[]
+  description         String?
+  tips                String[]
+  date_created        DateTime              @default(now())
+  date_updated        DateTime?             @default(now())
+  WorkoutPlanExercise WorkoutPlanExercise[]
+}
+
+model Session {
+  id           String   @id
+  expires      DateTime
+  sessionToken String   @unique
+  userId       String
+  User         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String        @id
+  email         String?       @unique
+  name          String?
+  emailVerified DateTime?
+  image         String?
+  createdAt     DateTime      @default(now())
+  lastLogin     DateTime?
+  Account       Account[]
+  Session       Session[]
+  WorkoutLog    WorkoutLog[]
+  WorkoutPlan   WorkoutPlan[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model WorkoutLog {
+  id        String   @id
+  userId    String
+  date      DateTime
+  comments  String?
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+  User      User     @relation(fields: [userId], references: [id])
+}
+
+model WorkoutPlan {
+  id                  String                @id
+  name                String
+  userId              String
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime
+  notes               String?
+  User                User                  @relation(fields: [userId], references: [id])
+  WorkoutPlanExercise WorkoutPlanExercise[]
+}
+
+model WorkoutPlanExercise {
+  workoutPlanId String
+  exerciseId    String
+  sets          Int
+  reps          Int
+  duration      Int?
+  order         Int
+  Exercise      Exercise    @relation(fields: [exerciseId], references: [id])
+  WorkoutPlan   WorkoutPlan @relation(fields: [workoutPlanId], references: [id], onDelete: Cascade)
+
+  @@id([workoutPlanId, exerciseId])
+}
+
+enum CategoryType {
+  strength
+  stretching
+  plyometrics
+  strongman
+  powerlifting
+  cardio
+  olympic_weightlifting @map("olympic weightlifting")
+}
+
+enum EquipmentType {
+  body_only     @map("body only")
+  machine
+  other
+  foam_roll     @map("foam roll")
+  kettlebells
+  dumbbell
+  cable
+  barbell
+  bands
+  medicine_ball @map("medicine ball")
+  exercise_ball @map("exercise ball")
+  e_z_curl_bar  @map("e-z curl bar")
+}
+
+enum ForceType {
+  pull
+  push
+  static
+}
+
+enum LevelType {
+  beginner
+  intermediate
+  expert
+}
+
+enum MechanicType {
+  compound
+  isolation
+}
+
+enum Muscle {
+  abdominals
+  hamstrings
+  adductors
+  quadriceps
+  biceps
+  shoulders
+  chest
+  middle_back @map("middle back")
+  calves
+  glutes
+  lower_back  @map("lower back")
+  lats
+  triceps
+  traps
+  forearms
+  neck
+  abductors
+}
