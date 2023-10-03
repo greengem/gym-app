@@ -4,6 +4,9 @@ import prisma from "@/lib/prisma";
 
 import PageHeading from "../components/PageHeading";
 import RoutineList from './RoutineList';
+import { Button } from "@nextui-org/button";
+import NextLink from "next/link";
+import { Link } from "@nextui-org/link";
 
 //export const revalidate = 0; //Needed to force no caching.
 
@@ -48,6 +51,9 @@ export default async function RoutinesPage() {
     return (
         <>
             <PageHeading title="Routines" />
+            <Link as={NextLink} href="/routines/new" className="mb-5">
+              <Button color="primary">Create New Routine</Button>
+            </Link>
             <RoutineList routines={routines} />
         </>
     );

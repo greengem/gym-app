@@ -20,7 +20,7 @@ export default function NavMenu() {
     const pathname = usePathname();
     
     return (
-        <Navbar maxWidth="full" className="mb-10 light">
+        <Navbar maxWidth="full" className="mb-10">
           <NavbarBrand><p className="font-bold text-inherit">GYM APP</p></NavbarBrand>
           <NavbarContent className="hidden sm:flex gap-4" justify="center">
           <NavbarItem><Link as={NextLink} href="/">Home</Link></NavbarItem>
