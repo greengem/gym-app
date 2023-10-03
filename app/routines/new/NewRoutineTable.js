@@ -8,6 +8,7 @@ export default function NewRoutineTable() {
                     <TableColumn>Exercise</TableColumn>
                     <TableColumn>Sets</TableColumn>
                     <TableColumn>Reps</TableColumn>
+                    <TableColumn>Time</TableColumn>
                 </TableHeader>
                 <TableBody emptyContent={"No rows to display."}>{[]}</TableBody>
             </Table>
