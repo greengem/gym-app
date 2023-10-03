@@ -15,7 +15,7 @@ function RoutineList({ routines }) {
       <TableHeader>
         <TableColumn>Name</TableColumn>
       </TableHeader>
-      <TableBody>
+      <TableBody emptyContent={"No Routines."}>
         {routines.map((routine) => (
           <TableRow key={routine.id}>
             <TableCell>{routine.name}</TableCell>
