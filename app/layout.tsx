@@ -1,4 +1,5 @@
 import './globals.css'
+import {Providers} from "./providers";
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { getServerSession } from 'next-auth'
@@ -19,13 +20,15 @@ export default async function RootLayout({
   const session = await getServerSession();
 
   return (
-    <html lang="en">
+    <html lang="en" className='dark'>
       <body className={inter.className}>
         <SessionProvider session={session}>
-          <main>
-            <NavMenu />
-            {children}
-          </main>
+          <Providers>
+            <main>
+              <NavMenu />
+              {children}
+            </main>
+          </Providers>
         </SessionProvider>
       </body>
     </html>
