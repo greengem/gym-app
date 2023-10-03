@@ -7,10 +7,10 @@ import RoutineList from './RoutineList';
 
 //export const revalidate = 0; //Needed to force no caching.
 
-async function fetchRoutines() {
+async function fetchRoutines(userId) {
     return await prisma.workoutPlan.findMany({
       where: {
-        userId: 'cln4dplo80000gwz1joipss3e',
+        userId: userId,
       },
       select: {
         id: true,
@@ -38,10 +38,12 @@ async function fetchRoutines() {
 
 export default async function RoutinesPage() {
     const session = await getServerSession();
-    const routines = await fetchRoutines();
+
     if (!session || !session.user) {
         redirect("/api/auth/signin");
     }
+
+    const routines = await fetchRoutines(session.user.id);
 
     return (
         <>
