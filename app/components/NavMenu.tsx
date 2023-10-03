@@ -1,81 +1,38 @@
 "use client";
-import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 
-const ACTIVE_ROUTE = "py-1 px-2 text-gray-300 bg-gray-700";
-const INACTIVE_ROUTE =
-  "py-1 px-2 text-gray-500 hover:text-gray-300 hover:bg-gray-700";
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem} from "@nextui-org/navbar";
+import NextLink from "next/link";
+import { Link } from "@nextui-org/link";
+import { Button } from "@nextui-org/button";
 
 function AuthButton() {
     const {data: session } = useSession();
 
     if (session) {
-        return (
-            <>
-                {session?.user?.name} <br />
-                <button onClick={() => signOut()}>Sign out</button>
-            </>
-        );
+        return <Button onClick={() => signOut()}>Sign out</Button>;
     }
-    return (
-        <>
-            Not signed in <br />
-            <button onClick={() => signIn()}>Sign in</button>
-        </>
-    );
+    return <Button onClick={() => signIn()}>Sign in</Button>
 }
 
 export default function NavMenu() {
     const pathname = usePathname();
     
     return (
-        <div>
-            <AuthButton />
-            <hr className="my-4" />
-      <ul>
-        <Link href="/">
-          <li className={pathname === "/" ? ACTIVE_ROUTE : INACTIVE_ROUTE}>
-            Home
-          </li>
-        </Link>
-        <Link href="/protected">
-          <li
-            className={
-              pathname === "/protected" ? ACTIVE_ROUTE : INACTIVE_ROUTE
-            }
-          >
-            Protected Route
-          </li>
-        </Link>
-        <Link href="/serverAction">
-          <li
-            className={
-              pathname === "/serverAction" ? ACTIVE_ROUTE : INACTIVE_ROUTE
-            }
-          >
-            Server Action
-          </li>
-        </Link>
-        <Link href="/apiFromClient">
-          <li
-            className={
-              pathname === "/apiFromClient" ? ACTIVE_ROUTE : INACTIVE_ROUTE
-            }
-          >
-            API From Client
-          </li>
-        </Link>
-        <Link href="/apiFromServer">
-          <li
-            className={
-              pathname === "/apiFromServer" ? ACTIVE_ROUTE : INACTIVE_ROUTE
-            }
-          >
-            API From Server
-          </li>
-        </Link>
-      </ul>
-      </div>
+        <Navbar maxWidth="full" className="mb-10 light">
+          <NavbarBrand><p className="font-bold text-inherit">GYM APP</p></NavbarBrand>
+          <NavbarContent className="hidden sm:flex gap-4" justify="center">
+          <NavbarItem><Link as={NextLink} href="/">Home</Link></NavbarItem>
+            <NavbarItem><Link as={NextLink} href="/dashboard">Dashboard</Link></NavbarItem>
+            <NavbarItem><Link as={NextLink} href="/exercises">Exercises</Link></NavbarItem>
+            <NavbarItem><Link as={NextLink} href="/routines">Routines</Link></NavbarItem>
+          </NavbarContent>
+          <NavbarContent justify="end">
+            <NavbarItem>
+              <AuthButton />
+            </NavbarItem>
+          </NavbarContent>
+        </Navbar>
     );
 }

@@ -24,8 +24,8 @@ export default async function RootLayout({
       <body className={inter.className}>
         <SessionProvider session={session}>
           <Providers>
-            <main className="max-w-screen-xl mx-auto">
-              <NavMenu />
+            <NavMenu />
+            <main className="max-w-screen-xl mx-auto">  
               <div className="container mx-auto px-5">
                 {children}
               </div>

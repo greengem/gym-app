@@ -1,17 +1,20 @@
 import { getServerSession } from 'next-auth'
-import Image from 'next/image'
+import Link from "next/link";
+
+import PageHeading from "./components/PageHeading";
 
 export default async function Home() {
   const session = await getServerSession();
   
   return (
     <>
-      getServerSession Result:
+      <PageHeading title="Landing Page" />
       {session?.user?.name ? (
-        <div>{session?.user?.name}</div>
-
+        <div>
+          <Link href="/dashboard">Go to Dashboard {session?.user?.name}</Link>
+        </div>
       ) : (
-        <div>Not logged in</div>
+        <div><Link href="/api/auth/signin">Log in</Link></div>
       )}
     </>
   );

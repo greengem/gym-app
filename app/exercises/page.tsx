@@ -2,7 +2,6 @@ import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 
 import PageHeading from "../components/PageHeading";
-import UserDetail from "./UserDetail";
 
 export default async function Dashboard() {
     const session = await getServerSession();
@@ -12,8 +11,7 @@ export default async function Dashboard() {
 
     return (
         <>
-            <PageHeading title="Dashboard" />
-            <UserDetail />
+            <PageHeading title="Exercises" />
         </>
     );
 }
