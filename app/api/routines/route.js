@@ -1,44 +1,38 @@
-import { getServerSession } from "next-auth";
 import prisma from '../../../lib/prisma';
+import { getServerSession } from "next-auth";
 
-export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    res.status(405).end();
-    return;
-  }
+export async function POST(request) {
+  const rawData = await request.text();
+  const data = JSON.parse(rawData);
 
-  const session = await getServerSession(req);
-  
-  if (!session || !session.user || !session.user.id) {
-    res.status(401).json({ success: false, message: 'Unauthorized' });
-    return;
-  }
-
-  const userId = session.user.id;
-
-  const data = JSON.parse(req.body);
-  const { routineName, exercises, notes } = data;
+  const { routineName, exercises, notes, userId } = data;
 
   try {
     const newWorkoutPlan = await prisma.workoutPlan.create({
-        data: {
-            name: routineName,
-            notes: notes,
-            userId: userId,
-            exercises: {
-                create: exercises.map((exercise, index) => ({
-                    exerciseId: exercise.id,
-                    sets: exercise.sets,
-                    reps: exercise.reps,
-                    duration: exercise.duration,
-                    order: index + 1,
-                })),
-            },
+      data: {
+        name: routineName,
+        notes: notes,
+        userId: userId,
+        exercises: {
+          create: exercises.map((exercise, index) => ({
+            exerciseId: exercise.id,
+            sets: exercise.sets,
+            reps: exercise.reps,
+            duration: exercise.duration,
+            order: index + 1,
+          })),
         },
+      },
     });
 
-    res.status(200).json({ success: true, id: newWorkoutPlan.id });
+    return new Response(JSON.stringify({ success: true, id: newWorkoutPlan.id }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    });
   } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+    return new Response(JSON.stringify({ success: false, error: error.message }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 }
