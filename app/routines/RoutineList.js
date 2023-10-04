@@ -8,7 +8,24 @@ import {
   TableCell,
 } from "@nextui-org/table";
 import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
-import { Button } from "@nextui-org/react";
+import { Button } from "@nextui-org/button";
+import {  Modal, ModalContent, ModalHeader, ModalBody, ModalFooter} from "@nextui-org/modal";
+
+async function deleteRoutine(routineId) {
+  try {
+    const response = await fetch(`/api/routines/${routineId}`, {
+      method: 'DELETE',
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to delete routine');
+    }
+
+  } catch (error) {
+    console.error('Error deleting routine:', error);
+  }
+}
+
 
 function RoutineList({ routines }) {
   return (
@@ -36,8 +53,9 @@ function RoutineList({ routines }) {
               </TableBody>
             </Table>
           </CardBody>
-          <CardFooter className="px-5">
+          <CardFooter className="px-5 justify-between">
             <Button color="secondary">Edit</Button>
+            <Button color="danger" onClick={() => deleteRoutine(routine.id)}>Delete</Button>
           </CardFooter>
         </Card>
       ))}

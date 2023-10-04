@@ -41,15 +41,6 @@ async function fetchRoutines(userId) {
 
 export default async function RoutinesPage() {
   const session = await getServerSession(authOptions);
-
-  if (session && session.user) {
-      console.log("UserID:", session.user.id);
-  } else {
-      console.log("No session or user data available");
-      redirect("/api/auth/signin");
-      return null;
-  }
-
   const routines = await fetchRoutines(session.user.id);
 
   return (

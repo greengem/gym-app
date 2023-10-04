@@ -11,11 +11,10 @@ function NewRoutineModal({ setSelectedExercises }) {
     const [results, setResults] = useState([]);
 
     const handleSearch = async () => {
-        if (query.length < 3) {
+        if (query.length < 2) {
             setResults([]);
             return;
         }
-        console.log(`Sending query: ${query}`);
         const response = await fetch(`/api/search?q=${query}`);
         const data = await response.json();
         setResults(data);
@@ -66,8 +65,8 @@ function NewRoutineModal({ setSelectedExercises }) {
                                                     onClick={() => {
                                                         const newExercise = {
                                                             ...exercise,
-                                                            sets: 0,   // or some default value
-                                                            reps: 0,   // or some default value
+                                                            sets: 3,   // or some default value
+                                                            reps: 8,   // or some default value
                                                             duration: 0   // or some default value
                                                         };
                                                         setSelectedExercises(prevExercises => [...prevExercises, newExercise]);

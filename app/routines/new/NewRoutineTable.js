@@ -1,5 +1,5 @@
 "use client";
-import {  Table,  TableHeader,  TableBody,  TableColumn,  TableRow,  TableCell} from "@nextui-org/table";
+import { Table,  TableHeader,  TableBody,  TableColumn,  TableRow,  TableCell } from "@nextui-org/table";
 import {Input} from "@nextui-org/input";
 
 export default function NewRoutineTable({ selectedExercises, setSelectedExercises }) {
