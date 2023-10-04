@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]/route";
 import prisma from "@/lib/prisma";
 
 import PageHeading from "../components/PageHeading";
@@ -39,21 +40,26 @@ async function fetchRoutines(userId) {
 }
 
 export default async function RoutinesPage() {
-    const session = await getServerSession();
+  const session = await getServerSession(authOptions);
 
-    if (!session || !session.user) {
-        redirect("/api/auth/signin");
-    }
+  if (session && session.user) {
+      console.log("UserID:", session.user.id);
+  } else {
+      console.log("No session or user data available");
+      redirect("/api/auth/signin");
+      return null;
+  }
 
-    const routines = await fetchRoutines(session.user.id);
+  const routines = await fetchRoutines(session.user.id);
 
-    return (
-        <>
-            <PageHeading title="Routines" />
-            <Link as={NextLink} href="/routines/new" className="mb-5">
-              <Button color="primary">Create New Routine</Button>
-            </Link>
-            <RoutineList routines={routines} />
-        </>
-    );
+  return (
+      <>
+          <PageHeading title="Routines" />
+          <Link as={NextLink} href="/routines/new" className="mb-5">
+            <Button color="primary">Create New Routine</Button>
+          </Link>
+          <RoutineList routines={routines} />
+      </>
+  );
 }
+

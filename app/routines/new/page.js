@@ -1,6 +1,6 @@
 "use client"
 import { useState } from 'react';
-import { redirect } from "next/navigation";
+import { useRouter } from 'next/navigation'
 
 import PageHeading from "../../components/PageHeading";
 import NewRoutineTable from "./NewRoutineTable";
@@ -15,6 +15,7 @@ export default function NewRoutinePage() {
     const [routineName, setRoutineName] = useState('');
     const [notes, setNotes] = useState('');
     const [selectedExercises, setSelectedExercises] = useState([]);
+    const router = useRouter()
 
     const handleSave = async () => {
         const data = {
@@ -34,7 +35,8 @@ export default function NewRoutinePage() {
             if (response.ok) {
                 const result = await response.json();
                 console.log(result);
-                redirect("/routines");
+                
+                router.push("/routines")
             } else {
                 alert("Failed to save routine.");
             }
