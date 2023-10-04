@@ -8,7 +8,6 @@ import RoutineList from './RoutineList';
 import { Button } from "@nextui-org/button";
 import NextLink from "next/link";
 import { Link } from "@nextui-org/link";
-import {  Modal,   ModalContent,   ModalHeader,   ModalBody,   ModalFooter} from "@nextui-org/modal";
 
 async function fetchRoutines(userId) {
     return await prisma.workoutPlan.findMany({

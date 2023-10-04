@@ -1,30 +1,85 @@
 "use client";
+import { useState, useEffect } from 'react';
+
 import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure} from "@nextui-org/react";
-import {  Table,  TableHeader,  TableBody,  TableColumn,  TableRow,  TableCell} from "@nextui-org/table";
-export default function NewRoutineModal() {
+import {Table, TableHeader, TableBody, TableColumn, TableRow, TableCell} from "@nextui-org/table";
+import {Input} from "@nextui-org/input";
+
+function NewRoutineModal({ setSelectedExercises }) {
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
+    const [query, setQuery] = useState('');
+    const [results, setResults] = useState([]);
+
+    const handleSearch = async () => {
+        if (query.length < 3) {
+            setResults([]);
+            return;
+        }
+        console.log(`Sending query: ${query}`);
+        const response = await fetch(`/api/search?q=${query}`);
+        const data = await response.json();
+        setResults(data);
+    }
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            if (query) {
+                handleSearch();
+            }
+        }, 300);
+
+        return () => clearTimeout(timer);
+    }, [query]);
 
     return (
         <>
-            <Button color="primary" onPress={onOpen} className="mb-2">Add Exercises</Button>
-            <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+            <Button color="primary" onPress={onOpen} className="mb-5 w-32">Add Exercises</Button>
+            <Modal isOpen={isOpen} onOpenChange={onOpenChange} size='3xl' scrollBehavior="inside">
                 <ModalContent>
                     {(onClose) => (
                         <>
                             <ModalHeader className="flex flex-col gap-1">Add Exercises</ModalHeader>
                             <ModalBody>
-                                <Table removeWrapper aria-label="Example static collection table">
+                                <Input 
+                                    type="search" 
+                                    label="Search" 
+                                    placeholder="Search for Exercises" 
+                                    value={query} 
+                                    onChange={(e) => setQuery(e.target.value)} 
+                                />
+
+                                <Table 
+                                    removeWrapper 
+                                    aria-label="Example static collection table">
                                     <TableHeader>
                                         <TableColumn>NAME</TableColumn>
-                                        <TableColumn>ROLE</TableColumn>
-                                        <TableColumn>STATUS</TableColumn>
+                                        <TableColumn>ACTION</TableColumn>
                                     </TableHeader>
                                     <TableBody>
-                                        <TableRow key="1">
-                                            <TableCell>Tony Reichert</TableCell>
-                                            <TableCell>CEO</TableCell>
-                                            <TableCell>Active</TableCell>
-                                        </TableRow>
+                                        {results.map(exercise => (
+                                            <TableRow key={exercise.id}>
+                                                <TableCell>{exercise.name}</TableCell>
+                                                <TableCell>
+                                                <Button 
+                                                    size='sm' 
+                                                    color='primary'
+                                                    onClick={() => {
+                                                        const newExercise = {
+                                                            ...exercise,
+                                                            sets: 0,   // or some default value
+                                                            reps: 0,   // or some default value
+                                                            duration: 0   // or some default value
+                                                        };
+                                                        setSelectedExercises(prevExercises => [...prevExercises, newExercise]);
+                                                        onClose();
+                                                    }}
+                                                >
+                                                    Add
+                                                </Button>
+
+                                                </TableCell>
+                                            </TableRow>
+                                        ))}
                                     </TableBody>
                                 </Table>
                             </ModalBody>
@@ -43,3 +98,4 @@ export default function NewRoutineModal() {
         </>
     );
 }
+export default NewRoutineModal;

@@ -85,11 +85,11 @@ model WorkoutLog {
 }
 
 model WorkoutPlan {
-  id                  String                @id
+  id                  String                @id @default(uuid())
   name                String
   userId              String
   createdAt           DateTime              @default(now())
-  updatedAt           DateTime
+  updatedAt           DateTime              @updatedAt
   notes               String?
   User                User                  @relation(fields: [userId], references: [id])
   WorkoutPlanExercise WorkoutPlanExercise[]
