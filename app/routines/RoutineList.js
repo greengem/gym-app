@@ -41,12 +41,17 @@ function RoutineList({ routines }) {
     onOpen();
   }
 
-  const handleConfirmDelete = () => {
-    deleteRoutine(selectedRoutineId);
+  const handleConfirmDelete = async () => {
+    try {
+      await deleteRoutine(selectedRoutineId);
+      router.refresh();
+    } catch (error) {
+      console.error("Failed to delete:", error);
+    }
     setSelectedRoutineId(null);
     onClose();
-    router.refresh()
-  }
+  };
+  
 
   return (
     <div>
