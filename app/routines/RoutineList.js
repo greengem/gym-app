@@ -1,4 +1,7 @@
 "use client";
+import { useState } from "react";
+import { useRouter } from 'next/navigation'
+
 import {
   Table,
   TableHeader,
@@ -9,7 +12,7 @@ import {
 } from "@nextui-org/table";
 import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
 import { Button } from "@nextui-org/button";
-import {  Modal, ModalContent, ModalHeader, ModalBody, ModalFooter} from "@nextui-org/modal";
+import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure} from "@nextui-org/react";
 
 async function deleteRoutine(routineId) {
   try {
@@ -28,6 +31,23 @@ async function deleteRoutine(routineId) {
 
 
 function RoutineList({ routines }) {
+  const router = useRouter();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [selectedRoutineId, setSelectedRoutineId] = useState(null);
+
+
+  const handleDeletePress = (routineId) => {
+    setSelectedRoutineId(routineId);
+    onOpen();
+  }
+
+  const handleConfirmDelete = () => {
+    deleteRoutine(selectedRoutineId);
+    setSelectedRoutineId(null);
+    onClose();
+    router.refresh()
+  }
+
   return (
     <div>
       {routines.map((routine) => (
@@ -55,10 +75,20 @@ function RoutineList({ routines }) {
           </CardBody>
           <CardFooter className="px-5 justify-between">
             <Button color="secondary">Edit</Button>
-            <Button color="danger" onClick={() => deleteRoutine(routine.id)}>Delete</Button>
+            <Button onPress={() => handleDeletePress(routine.id)}>Delete</Button>
           </CardFooter>
         </Card>
       ))}
+              <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalContent>
+              <ModalHeader className="flex flex-col gap-1">Modal Title</ModalHeader>
+              <ModalBody><p>Are you sure you want to delete this routine?</p></ModalBody>
+              <ModalFooter>
+              <Button variant="light" onPress={onClose}>Cancel</Button>
+              <Button color="danger" onClick={handleConfirmDelete}>Delete</Button>
+              </ModalFooter>
+        </ModalContent>
+        </Modal>
     </div>
   );
 }
