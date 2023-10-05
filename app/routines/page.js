@@ -12,30 +12,30 @@ import { Link } from "@nextui-org/link";
 
 async function fetchRoutines(userId) {
     return await prisma.workoutPlan.findMany({
-      where: {
-        userId: userId,
-      },
-      select: {
-        id: true,
-        name: true,
-        notes: true,
-        WorkoutPlanExercise: {
-          select: {
-            Exercise: {
-              select: {
-                id: true,
-                name: true,
-              }
-            },
-            sets: true,
-            reps: true,
-            duration: true,
-            order: true,
-          }
+        where: {
+          userId: userId,
         },
-        createdAt: true,
-        updatedAt: true,
-      }
+        select: {
+          id: true,
+          name: true,
+          notes: true,
+          WorkoutPlanExercise: {
+            select: {
+              Exercise: {
+                select: {
+                  id: true,
+                  name: true,
+                }
+              },
+              sets: true,
+              reps: true,
+              duration: true,
+              order: true,
+            }
+          },
+          createdAt: true,
+          updatedAt: true,
+        }
     });
 }
 

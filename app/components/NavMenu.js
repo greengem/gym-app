@@ -40,6 +40,7 @@ function AvatarDropdown() {
               <p className="font-semibold">{session?.user?.email}</p>
             </DropdownItem>
             <DropdownItem key="dashboard" as={NextLink} href="/dashboard">Dashboard</DropdownItem>
+            <DropdownItem key="analytics" as={NextLink} href="/workout">Start Workout</DropdownItem>
             <DropdownItem key="analytics" as={NextLink} href="/routines">Routines</DropdownItem>
             <DropdownItem key="system" as={NextLink} href="/exercises">Exercises</DropdownItem>
             <DropdownItem key="logout" color="danger" onPress={() => signOut()}>

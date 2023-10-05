@@ -60,7 +60,7 @@ function RoutineList({ routines }) {
           <CardHeader className="flex gap-3 px-5">
             <Image
               className="bg-white"
-              alt="nextui logo"
+              alt="Workout Icon"
               height={40}
               radius="sm"
               src="/icons/tabler-icon-barbell.svg"
