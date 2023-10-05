@@ -12,7 +12,7 @@ import {
 } from "@nextui-org/table";
 import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
 import { Button } from "@nextui-org/button";
-import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure} from "@nextui-org/react";
+import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure, Image} from "@nextui-org/react";
 
 async function deleteRoutine(routineId) {
   try {
@@ -52,8 +52,22 @@ function RoutineList({ routines }) {
     <div>
       {routines.map((routine) => (
         <Card key={routine.id} className="mb-5">
-          <CardHeader className="px-5 pt-5">{routine.name}</CardHeader>
+          <CardHeader className="flex gap-3 px-5">
+            <Image
+              className="bg-white"
+              alt="nextui logo"
+              height={40}
+              radius="sm"
+              src="/icons/tabler-icon-barbell.svg"
+              width={40}
+            />
+            <div className="flex flex-col">
+              <p className="text-md">{routine.name}</p>
+              <p className="text-small text-default-500">nextui.org</p>
+            </div>
+          </CardHeader>
           <CardBody className="py-0">
+          {routine.notes && <p className="text-xs mb-3 text-gray-500">{routine.notes}</p>}
             <Table removeWrapper aria-label="Routine exercises table">
               <TableHeader>
                 <TableColumn>EXERCISE</TableColumn>
@@ -73,9 +87,8 @@ function RoutineList({ routines }) {
               </TableBody>
             </Table>
           </CardBody>
-          <CardFooter className="px-5 justify-between">
-            <Button color="secondary">Edit</Button>
-            <Button onPress={() => handleDeletePress(routine.id)}>Delete</Button>
+          <CardFooter className="px-5">
+            <Button color="danger" onPress={() => handleDeletePress(routine.id)}>Delete</Button>
           </CardFooter>
         </Card>
       ))}

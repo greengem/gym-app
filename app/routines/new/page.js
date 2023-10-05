@@ -18,11 +18,22 @@ export default function NewRoutinePage() {
     const router = useRouter()
 
     const handleSave = async () => {
+        if (!routineName.trim()) {
+            alert("Routine Name is required!");
+            return;
+        }
+    
+        if (selectedExercises.length === 0) {
+            alert("Please select at least one exercise!");
+            return;
+        }
+    
         const data = {
             routineName,
             notes,
             exercises: selectedExercises
         };
+    
         try {
             const response = await fetch('/api/routines', {
                 method: 'POST',
@@ -31,7 +42,7 @@ export default function NewRoutinePage() {
                 },
                 body: JSON.stringify(data)
             });
-
+    
             if (response.ok) {
                 const result = await response.json();
                 console.log(result);
@@ -44,6 +55,7 @@ export default function NewRoutinePage() {
             console.error("An error occurred:", error);
         }
     }
+    
 
     return (
         <>

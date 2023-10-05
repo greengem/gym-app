@@ -10,14 +10,14 @@ export default function NewRoutineTable({ selectedExercises, setSelectedExercise
     };
     return (
         <>
-            <Table removeWrapper aria-label="Example empty table">
+            <Table removeWrapper aria-label="Table of Exercises for new Routine.">
                 <TableHeader>
                     <TableColumn>Exercise</TableColumn>
                     <TableColumn>Sets</TableColumn>
                     <TableColumn>Reps</TableColumn>
                     <TableColumn>Time</TableColumn>
                 </TableHeader>
-                <TableBody emptyContent={"No rows to display."}>
+                <TableBody emptyContent={"No Exercises selected. Click Add Exercises to get started."}>
                     {selectedExercises.map((exercise, index) => (
                         <TableRow key={index}>
                             <TableCell>{exercise.name}</TableCell>

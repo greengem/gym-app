@@ -1,9 +1,9 @@
 "use client";
 import { useState, useEffect } from 'react';
 
-import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure} from "@nextui-org/react";
-import {Table, TableHeader, TableBody, TableColumn, TableRow, TableCell} from "@nextui-org/table";
-import {Input} from "@nextui-org/input";
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
+import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell } from "@nextui-org/table";
+import { Input } from "@nextui-org/input";
 
 function NewRoutineModal({ setSelectedExercises }) {
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
@@ -54,7 +54,7 @@ function NewRoutineModal({ setSelectedExercises }) {
                                         <TableColumn>NAME</TableColumn>
                                         <TableColumn>ACTION</TableColumn>
                                     </TableHeader>
-                                    <TableBody>
+                                    <TableBody emptyContent={"Type in the search bar to get started."}>
                                         {results.map(exercise => (
                                             <TableRow key={exercise.id}>
                                                 <TableCell>{exercise.name}</TableCell>
@@ -65,9 +65,9 @@ function NewRoutineModal({ setSelectedExercises }) {
                                                     onClick={() => {
                                                         const newExercise = {
                                                             ...exercise,
-                                                            sets: 3,   // or some default value
-                                                            reps: 8,   // or some default value
-                                                            duration: 0   // or some default value
+                                                            sets: 3,
+                                                            reps: 8,
+                                                            duration: 0
                                                         };
                                                         setSelectedExercises(prevExercises => [...prevExercises, newExercise]);
                                                         onClose();
