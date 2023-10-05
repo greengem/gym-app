@@ -19,7 +19,7 @@ export default async function ExercisesPage() {
     const session = await getServerSession();
     const exercises = await fetchExercises();
     if (!session || !session.user) {
-        redirect("/api/auth/signin");
+        redirect("/");
     }
 
     return (

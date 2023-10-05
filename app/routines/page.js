@@ -41,6 +41,11 @@ async function fetchRoutines(userId) {
 
 export default async function RoutinesPage() {
   const session = await getServerSession(authOptions);
+
+  if (!session || !session.user) {
+    redirect("/");
+  }
+
   const routines = await fetchRoutines(session.user.id);
 
   return (

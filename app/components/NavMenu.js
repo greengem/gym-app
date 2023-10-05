@@ -13,7 +13,7 @@ function AuthButton() {
     const {data: session } = useSession();
 
     if (!session) {
-      return <Button onClick={() => signIn()}>Sign in</Button>
+      return <Button  onClick={() => signIn(undefined, { callbackUrl: '/dashboard' })}>Sign in</Button>
     }    
 }
 
@@ -28,9 +28,9 @@ function AvatarDropdown() {
               isBordered
               as="button"
               className="transition-transform"
-              color="secondary"
-              name={session?.user?.name}
+              color="primary"
               size="sm"
+              name={session?.user?.name}
               src={session?.user?.image}
             />
           </DropdownTrigger>
@@ -39,11 +39,10 @@ function AvatarDropdown() {
               <p className="font-semibold">Signed in as</p>
               <p className="font-semibold">{session?.user?.email}</p>
             </DropdownItem>
-            <DropdownItem key="settings">Dashboard</DropdownItem>
-            <DropdownItem key="team_settings">Activity</DropdownItem>
-            <DropdownItem key="analytics">Routines</DropdownItem>
-            <DropdownItem key="system">Exercises</DropdownItem>
-            <DropdownItem key="logout" color="danger" onClick={() => signOut()}>
+            <DropdownItem key="dashboard" as={NextLink} href="/dashboard">Dashboard</DropdownItem>
+            <DropdownItem key="analytics" as={NextLink} href="/routines">Routines</DropdownItem>
+            <DropdownItem key="system" as={NextLink} href="/exercises">Exercises</DropdownItem>
+            <DropdownItem key="logout" color="danger" onPress={() => signOut()}>
               Log Out
             </DropdownItem>
           </DropdownMenu>
@@ -56,14 +55,8 @@ export default function NavMenu() {
     const pathname = usePathname();
     
     return (
-        <Navbar maxWidth="full" className="mb-10">
-          <NavbarBrand><p className="font-bold text-inherit">GYM APP</p></NavbarBrand>
-          <NavbarContent className="hidden sm:flex gap-4" justify="center">
-          <NavbarItem><Link as={NextLink} href="/">Home</Link></NavbarItem>
-            <NavbarItem><Link as={NextLink} href="/dashboard">Dashboard</Link></NavbarItem>
-            <NavbarItem><Link as={NextLink} href="/exercises">Exercises</Link></NavbarItem>
-            <NavbarItem><Link as={NextLink} href="/routines">Routines</Link></NavbarItem>
-          </NavbarContent>
+        <Navbar maxWidth="full">
+          <NavbarBrand><p className="font-bold text-inherit"><Link color="foreground" href="/" as={NextLink}>GYM APP</Link></p></NavbarBrand>
           <NavbarContent as="div" justify="end">
             <AuthButton />
             <AvatarDropdown />
