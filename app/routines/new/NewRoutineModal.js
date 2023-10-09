@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
 import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell } from "@nextui-org/table";
@@ -12,7 +12,7 @@ function NewRoutineModal({ setSelectedExercises }) {
     const [query, setQuery] = useState('');
     const [results, setResults] = useState([]);
 
-    const handleSearch = async () => {
+    const handleSearch = useCallback(async () => {
         if (query.length < 2) {
             setResults([]);
             return;
@@ -20,7 +20,7 @@ function NewRoutineModal({ setSelectedExercises }) {
         const response = await fetch(`/api/search?q=${query}`);
         const data = await response.json();
         setResults(data);
-    }
+    }, [query]);
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -30,7 +30,7 @@ function NewRoutineModal({ setSelectedExercises }) {
         }, 300);
 
         return () => clearTimeout(timer);
-    }, [query]);
+    }, [query, handleSearch]);
 
     return (
         <>

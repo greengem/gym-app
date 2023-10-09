@@ -65,6 +65,7 @@ export default async function WorkoutPage() {
                                     radius="sm"
                                     src="/icons/tabler-icon-barbell.svg"
                                     width={40}
+                                    alt="Barbell Icon"
                                 />
                                 <div className="flex flex-col">
                                     <p className="text-md text-truncate">{routine.name}</p>
