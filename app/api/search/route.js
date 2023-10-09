@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server';
 
 const prisma = new PrismaClient();
 
+// GET
 export async function GET(request) {
   const searchQuery = new URLSearchParams(request.url.split('?')[1]).get('q') || '';
 

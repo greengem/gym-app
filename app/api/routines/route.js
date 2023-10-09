@@ -1,7 +1,10 @@
-import prisma from '../../../lib/prisma';
+import { PrismaClient } from '@prisma/client'
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/route";
 
+const prisma = new PrismaClient()
+
+// POST
 export async function POST(request) {
   const session = await getServerSession(authOptions);
 
@@ -43,5 +46,25 @@ export async function POST(request) {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
     });
+  }
+}
+
+// GET
+export async function GET() {
+  try {
+      const session = await getServerSession(authOptions);
+      if (!session) {
+        return Response.json({ error: "Unauthorized" }, { status: 401 })
+      }
+      
+      const routines = await prisma.workoutPlan.findMany({
+        where: {
+          userId: session.user.id
+        }
+      })
+      
+      return Response.json(routines)
+  } catch (error) {
+      return Response.json({ error: "An error occurred fetching routines." }, { status: 500 })
   }
 }
