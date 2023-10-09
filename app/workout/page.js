@@ -11,6 +11,8 @@ import { Image } from "@nextui-org/image"
 import {Link} from "@nextui-org/link";
 import NextLink from "next/link";
 
+import { IconPlayerPlay } from '@tabler/icons-react';
+
 async function fetchRoutines(userId) {
     return await prisma.workoutPlan.findMany({
       where: {
@@ -79,8 +81,9 @@ export default async function WorkoutPage() {
                                 </ol>
                             </CardBody>
                             <CardFooter>
-                                <Link as={NextLink} href={`/workout/start?routineId=${routine.id}`}>
-                                    <Button color="primary">Start Workout</Button>
+                                <Link as={NextLink} href={`/workout/${routine.id}`}>
+                                    <Button color="primary" className="gap-unit-1">
+                                        <IconPlayerPlay size={16} />Start Workout</Button>
                                 </Link>
                             </CardFooter>
                         </Card>

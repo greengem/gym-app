@@ -5,6 +5,8 @@ import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDi
 import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell } from "@nextui-org/table";
 import { Input } from "@nextui-org/input";
 
+import { IconPlus, IconDeviceFloppy } from "@tabler/icons-react";
+
 function NewRoutineModal({ setSelectedExercises }) {
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
     const [query, setQuery] = useState('');
@@ -32,7 +34,9 @@ function NewRoutineModal({ setSelectedExercises }) {
 
     return (
         <>
-            <Button color="primary" onPress={onOpen} className="mb-5 w-32">Add Exercises</Button>
+            <Button color="primary" onPress={onOpen} className="mb-5 gap-unit-1">
+                <IconPlus size={16} />Add Exercises
+            </Button>
             <Modal isOpen={isOpen} onOpenChange={onOpenChange} size='3xl' scrollBehavior="inside">
                 <ModalContent>
                     {(onClose) => (
@@ -86,8 +90,8 @@ function NewRoutineModal({ setSelectedExercises }) {
                                 <Button color="danger" variant="light" onPress={onClose}>
                                     Close
                                 </Button>
-                                <Button color="primary" onPress={onClose}>
-                                    Save
+                                <Button color="primary" onPress={onClose} className='gap-unit-1'>
+                                    <IconDeviceFloppy size={16} />Save
                                 </Button>
                             </ModalFooter>
                         </>

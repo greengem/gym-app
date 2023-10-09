@@ -19,7 +19,7 @@ interface ExerciseListProps {
 
 function ExerciseList({ exercises }: ExerciseListProps): JSX.Element {
   return (
-    <Table aria-label="Example static collection table">
+    <Table aria-label="Exercise Table">
       <TableHeader>
         <TableColumn>Name</TableColumn>
       </TableHeader>

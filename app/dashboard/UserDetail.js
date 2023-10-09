@@ -11,6 +11,7 @@ export default async function UserDetail(){
             avatarProps={{
                 src: session?.user?.image
             }}
+            className='mb-10'
         />
     );
 }

@@ -11,6 +11,8 @@ import {Textarea} from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
 import { Card, CardBody } from '@nextui-org/card';
 
+import { IconDeviceFloppy } from "@tabler/icons-react";
+
 export default function NewRoutinePage() {
     const [routineName, setRoutineName] = useState('');
     const [notes, setNotes] = useState('');
@@ -86,7 +88,9 @@ export default function NewRoutinePage() {
                     <NewRoutineTable selectedExercises={selectedExercises} setSelectedExercises={setSelectedExercises} />
                 </CardBody>
             </Card>
-            <Button color="danger" onClick={handleSave}>Save Routine</Button>
+            <Button color="danger" onClick={handleSave} className='gap-unit-1'>
+                <IconDeviceFloppy size={16} />Save Routine
+            </Button>
         </>
     );
 }

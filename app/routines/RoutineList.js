@@ -13,6 +13,7 @@ import {
 import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
 import { Button } from "@nextui-org/button";
 import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure, Image} from "@nextui-org/react";
+import { IconTrash } from "@tabler/icons-react";
 
 async function deleteRoutine(routineId) {
   try {
@@ -93,7 +94,8 @@ function RoutineList({ routines }) {
             </Table>
           </CardBody>
           <CardFooter className="px-5">
-            <Button color="danger" onPress={() => handleDeletePress(routine.id)}>Delete</Button>
+            <Button color="danger" onPress={() => handleDeletePress(routine.id)} className="gap-unit-1">
+              <IconTrash size={16} />Delete</Button>
           </CardFooter>
         </Card>
       ))}

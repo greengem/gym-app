@@ -10,6 +10,8 @@ import { Button } from "@nextui-org/button";
 import NextLink from "next/link";
 import { Link } from "@nextui-org/link";
 
+import { IconPlus } from "@tabler/icons-react";
+
 async function fetchRoutines(userId) {
     return await prisma.workoutPlan.findMany({
         where: {
@@ -52,7 +54,9 @@ export default async function RoutinesPage() {
       <>
           <PageHeading title="Routines" />
           <Link as={NextLink} href="/routines/new" className="mb-5">
-            <Button color="primary">Create New Routine</Button>
+            <Button color="primary" className="gap-unit-1">
+              <IconPlus size={16} />Create New Routine
+            </Button>
           </Link>
           <RoutineList routines={routines} />
       </>
