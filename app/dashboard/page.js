@@ -5,7 +5,15 @@ import prisma from "@/lib/prisma";
 
 import PageHeading from "../components/PageHeading";
 import UserDetail from "./UserDetail";
-import WorkoutsList from "./WorkoutsList";
+import WorkoutFreqOverTime from "./KPI/WorkoutFreqOverTime"
+import VolumeProgression from "./KPI/VolumeProgression"
+import ExerciseBreakdown from "./KPI/ExerciseBreakdown"
+import OneRM from "./KPI/OneRM"
+import CaloriesBurned from "./KPI/CaloriesBurned"
+import WorkoutDurations from "./KPI/WorkoutDurations"
+
+
+import {Card, CardHeader, CardBody, CardFooter} from "@nextui-org/card";
 
 async function fetchWorkouts(userId) {
   return await prisma.workoutLog.findMany({
@@ -38,7 +46,14 @@ export default async function DashboardPage() {
         <>
             <PageHeading title="Dashboard" />
             <UserDetail />
-            <WorkoutsList workouts={workouts} />
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+              <Card><WorkoutFreqOverTime /></Card>
+              <Card><VolumeProgression /></Card>
+              <Card><ExerciseBreakdown /></Card>
+              <Card><OneRM /></Card>
+              <Card><CaloriesBurned /></Card>
+              <Card><WorkoutDurations /></Card>
+            </div>
         </>
     );
 }
