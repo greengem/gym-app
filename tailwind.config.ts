@@ -7,7 +7,15 @@ const config: Config = {
     './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}'
   ],
   theme: {
-    extend: {},
+    extend: {
+      height: {
+        'hero': 'calc(100vh - 64px)'
+      },
+      colors: {
+        'blue-start': '#5EA2EF',
+        'blue-end': '#0072F5'
+      }
+    },
   },
   darkMode: "class",
   plugins: [nextui()]

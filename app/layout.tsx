@@ -5,6 +5,7 @@ import { Inter } from 'next/font/google'
 import { getServerSession } from 'next-auth'
 import SessionProvider from './components/SessionProvider'
 import NavMenu from './components/NavMenu'
+import Footer from "./components/Footer"
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -25,11 +26,10 @@ export default async function RootLayout({
         <SessionProvider session={session}>
           <Providers>
             <NavMenu />
-            <main className="max-w-screen-xl mx-auto">  
-              <div className="container mx-auto px-5">
+              <main>
                 {children}
-              </div>
-            </main>
+              </main>
+              <Footer />
           </Providers>
         </SessionProvider>
       </body>

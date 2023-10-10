@@ -3,7 +3,7 @@ type PageHeadingProps = {
 };
   
 const PageHeading: React.FC<PageHeadingProps> = ({ title }) => {
-    return <h1 className='text-3xl font-semibold mb-10'>{title}</h1>
+    return <h1 className='text-6xl font-semibold mb-10 mt-7'>{title}</h1>
 }
 
 export default PageHeading;
