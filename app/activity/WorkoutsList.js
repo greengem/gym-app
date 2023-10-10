@@ -1,5 +1,6 @@
 'use client'
 import React from "react";
+import FormattedDate from '../components/FormattedDate'
 
 import {
   Table,
@@ -10,8 +11,10 @@ import {
   TableCell,
 } from "@nextui-org/table";
 import { Card, CardBody, CardHeader, CardFooter } from '@nextui-org/card';
-import {  Modal,   ModalContent,   ModalHeader,   ModalBody,   ModalFooter, useDisclosure} from "@nextui-org/react";
+import {  Modal,   ModalContent,   ModalHeader,   ModalBody,   ModalFooter, useDisclosure, Divider} from "@nextui-org/react";
 import { Button } from "@nextui-org/button";
+import {Image} from "@nextui-org/react";
+import NextImage from "next/image";
 
 import { IconInfoCircle } from '@tabler/icons-react';
 
@@ -26,11 +29,24 @@ function WorkoutsList({ workouts }) {
 
     return (
         <>
-            <h1 className='text-3xl font-semibold mb-4'>Activity</h1>
             {workouts.map((workout) => (
-                <Card key={workout.id} className="mb-4">
-                    <CardHeader className="px-5">Routine: {workout.name}</CardHeader>
-                    <CardBody>
+                <Card key={workout.id}>
+                    <CardHeader className="flex gap-3">
+                        <Image
+                            as={NextImage}
+                            alt="nextui logo"
+                            height={40}
+                            radius="sm"
+                            src="/icons/tabler-icon-barbell-white.svg"
+                            width={40}
+                        />
+                        <div className="flex flex-col">
+                            <p className="text-md">Routine: {workout.name}</p>
+                            <p className="text-small text-default-500"><FormattedDate dateString={workout.date} /></p>
+                        </div>
+                    </CardHeader>
+                    <Divider/>
+                    <CardBody className="px-3">
                         <Table removeWrapper aria-label="Workout table">
                             <TableHeader>
                                 <TableColumn>Exercise</TableColumn>
@@ -52,10 +68,12 @@ function WorkoutsList({ workouts }) {
                             </TableBody>
                         </Table>
                     </CardBody>
-                    <CardFooter className="px-5">
-                        <Button className="gap-unit-1" color="secondary" onPress={() => handleMoreDetailsClick(workout)}>
+                    <Divider/>
+                    <CardFooter>
+                        <Button size="sm" className="gap-unit-1 mr-2" color="secondary" onPress={() => handleMoreDetailsClick(workout)}>
                             <IconInfoCircle size={16} />More Details
                         </Button>
+                        <Button size="sm" color="danger">Delete Activity</Button>
                     </CardFooter>
                 </Card>
             ))}

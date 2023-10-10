@@ -9,11 +9,13 @@ import { Link } from "@nextui-org/link";
 import { Button } from "@nextui-org/button";
 import { Avatar } from "@nextui-org/avatar";
 
+import { IconBarbell } from '@tabler/icons-react';
+
 function AuthButton() {
     const {data: session } = useSession();
 
     if (!session) {
-      return <Button  onClick={() => signIn(undefined, { callbackUrl: '/dashboard' })}>Sign in</Button>
+      return <Button color="primary" variant="flat" onClick={() => signIn(undefined, { callbackUrl: '/dashboard' })}>Sign in</Button>
     }    
 }
 
@@ -40,6 +42,7 @@ function AvatarDropdown() {
               <p className="font-semibold">{session?.user?.email}</p>
             </DropdownItem>
             <DropdownItem key="dashboard" as={NextLink} href="/dashboard">Dashboard</DropdownItem>
+            <DropdownItem key="dashboard" as={NextLink} href="/activity">Activity</DropdownItem>
             <DropdownItem key="analytics" as={NextLink} href="/workout">Start Workout</DropdownItem>
             <DropdownItem key="analytics" as={NextLink} href="/routines">Routines</DropdownItem>
             <DropdownItem key="system" as={NextLink} href="/exercises">Exercises</DropdownItem>
@@ -57,7 +60,14 @@ export default function NavMenu() {
     
     return (
         <Navbar maxWidth="full">
-          <NavbarBrand><p className="font-bold text-inherit"><Link color="foreground" href="/" as={NextLink}>GYM APP</Link></p></NavbarBrand>
+          <NavbarBrand>
+              <Link color="primary" href="/" as={NextLink}>
+                <IconBarbell className="mr-1" />
+              </Link>
+              <Link color="foreground" href="/" as={NextLink}>
+                SyncStrength
+              </Link>
+          </NavbarBrand>
           <NavbarContent as="div" justify="end">
             <AuthButton />
             <AvatarDropdown />

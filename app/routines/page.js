@@ -58,7 +58,9 @@ export default async function RoutinesPage() {
               <IconPlus size={16} />Create New Routine
             </Button>
           </Link>
-          <RoutineList routines={routines} />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+            <RoutineList routines={routines} />
+          </div>
       </>
   );
 }

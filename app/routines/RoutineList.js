@@ -12,8 +12,10 @@ import {
 } from "@nextui-org/table";
 import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
 import { Button } from "@nextui-org/button";
-import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure, Image} from "@nextui-org/react";
-import { IconTrash } from "@tabler/icons-react";
+import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure, Image, Divider} from "@nextui-org/react";
+import {Accordion, AccordionItem} from "@nextui-org/accordion";
+
+import { IconTrash, IconNote } from "@tabler/icons-react";
 
 async function deleteRoutine(routineId) {
   try {
@@ -55,16 +57,16 @@ function RoutineList({ routines }) {
   
 
   return (
-    <div>
+    <>
       {routines.map((routine) => (
         <Card key={routine.id} className="mb-5">
-          <CardHeader className="flex gap-3 px-5">
+          <CardHeader className="flex gap-3">
             <Image
               className="bg-white"
               alt="Workout Icon"
               height={40}
               radius="sm"
-              src="/icons/tabler-icon-barbell.svg"
+              src="/icons/tabler-icon-barbell-black.svg"
               width={40}
             />
             <div className="flex flex-col">
@@ -72,8 +74,14 @@ function RoutineList({ routines }) {
               <p className="text-small text-default-500">nextui.org</p>
             </div>
           </CardHeader>
-          <CardBody className="py-0">
-          {routine.notes && <p className="text-xs mb-3 text-gray-500">{routine.notes}</p>}
+          <Divider />
+          <CardBody className="px-3 pt-0">
+          <Accordion isCompact>
+            <AccordionItem key="1" aria-label="Notes" title="Notes">
+            {routine.notes && <p className="text-sm mb-3 text-gray-500">{routine.notes}</p>}
+            </AccordionItem>
+          </Accordion>
+          
             <Table removeWrapper aria-label="Routine exercises table">
               <TableHeader>
                 <TableColumn>EXERCISE</TableColumn>
@@ -93,8 +101,9 @@ function RoutineList({ routines }) {
               </TableBody>
             </Table>
           </CardBody>
-          <CardFooter className="px-5">
-            <Button color="danger" onPress={() => handleDeletePress(routine.id)} className="gap-unit-1">
+          <Divider />
+          <CardFooter>
+            <Button size="sm" color="danger" onPress={() => handleDeletePress(routine.id)} className="gap-unit-1">
               <IconTrash size={16} />Delete</Button>
           </CardFooter>
         </Card>
@@ -109,7 +118,8 @@ function RoutineList({ routines }) {
               </ModalFooter>
         </ModalContent>
         </Modal>
-    </div>
+        </>
+
   );
 }
 

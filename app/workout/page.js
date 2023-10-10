@@ -9,6 +9,7 @@ import {Card, CardHeader, CardBody, CardFooter} from "@nextui-org/card";
 import { Button } from "@nextui-org/button";
 import { Image } from "@nextui-org/image"
 import {Link} from "@nextui-org/link";
+import { Divider } from "@nextui-org/divider";
 import NextLink from "next/link";
 
 import { IconPlayerPlay } from '@tabler/icons-react';
@@ -54,16 +55,20 @@ export default async function WorkoutPage() {
     return (
         <>
             <PageHeading title="Start Workout" />
+            <Link as={NextLink} href="/routines/new" className="mb-5">
+                <Button color="primary">
+                    Create New Routine
+                </Button>
+            </Link>
             <h4 className="font-semibold text-xl mb-5">My Routines:</h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
                     {routines.map(routine => (
                         <Card key={routine.id}>
                             <CardHeader className="flex gap-3">
                                 <Image
-                                    className="bg-white"
                                     height={40}
                                     radius="sm"
-                                    src="/icons/tabler-icon-barbell.svg"
+                                    src="/icons/tabler-icon-barbell-white.svg"
                                     width={40}
                                     alt="Barbell Icon"
                                 />
@@ -72,18 +77,20 @@ export default async function WorkoutPage() {
                                     <p className="text-small text-default-500">nextui.org</p>
                                 </div>
                             </CardHeader>
+                            <Divider />
                             <CardBody>
-                                <ol className="text-sm text-gray-500">
+                                <ol className="text-sm list-decimal list-inside">
                                     {routine.WorkoutPlanExercise.map((exerciseDetail) => (
-                                        <li key={exerciseDetail.Exercise.id}>
+                                        <li key={exerciseDetail.Exercise.id} className="my-1">
                                             {exerciseDetail.Exercise.name}
                                         </li>
                                     ))}
                                 </ol>
                             </CardBody>
+                            <Divider />
                             <CardFooter>
                                 <Link as={NextLink} href={`/workout/${routine.id}`}>
-                                    <Button color="primary" className="gap-unit-1">
+                                    <Button size="sm" color="primary" className="gap-unit-1">
                                         <IconPlayerPlay size={16} />Start Workout</Button>
                                 </Link>
                             </CardFooter>
