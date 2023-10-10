@@ -6,14 +6,28 @@ import PageHeading from "../components/PageHeading";
 import ExerciseList from './ExerciseList';
 
 async function fetchExercises() {
-    return await prisma.exercise.findMany({
-      select: {
-        id: true,
-        name: true,
-      },
-      take: 200,
-    });
-  }
+  return await prisma.exercise.findMany({
+    select: {
+      id: true,
+      name: true,
+      aliases: true,
+      primary_muscles: true,
+      secondary_muscles: true,
+      force: true,
+      level: true,
+      mechanic: true,
+      equipment: true,
+      category: true,
+      instructions: true,
+      description: true,
+      tips: true,
+      date_created: true,
+      date_updated: true,
+    },
+    take: 20,
+  });
+}
+
 
 export default async function ExercisesPage() {
     const session = await getServerSession();
