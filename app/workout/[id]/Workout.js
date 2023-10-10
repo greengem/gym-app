@@ -11,7 +11,7 @@ import {
 } from "@nextui-org/table";
 import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
 import { Button } from "@nextui-org/button";
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure, Image } from "@nextui-org/react";
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure, Image, Divider } from "@nextui-org/react";
 import {Input} from "@nextui-org/input";
 import {Link} from "@nextui-org/react";
 import NextLink from "next/link";
@@ -112,11 +112,11 @@ function Workout({ workout }) {
             {workout.WorkoutPlanExercise.map((exerciseItem, index) => (
                 <Card className="mb-5" key={exerciseItem.Exercise.id}>
                     <CardHeader>{exerciseItem.Exercise.name}</CardHeader>
+                    <Divider />
                     <CardBody>
                         <Table removeWrapper aria-label="Workout Table">
                             <TableHeader>
                                 <TableColumn>SET</TableColumn>
-                                <TableColumn>PREVIOUS</TableColumn>
                                 <TableColumn>KG</TableColumn>
                                 <TableColumn>REPS</TableColumn>
                                 <TableColumn></TableColumn>
@@ -125,32 +125,31 @@ function Workout({ workout }) {
                                 {Array.from({ length: exerciseItem.sets }).map((_, setIndex) => (
                                     <TableRow key={setIndex}>
                                         <TableCell>{setIndex + 1}</TableCell>
-                                        <TableCell>n/a</TableCell>
                                         <TableCell>
                                             <Input onChange={(e) => handleWeightChange(exerciseItem.Exercise.id, setIndex, e.target.value)} />
                                         </TableCell>
                                         <TableCell>
                                             <Input onChange={(e) => handleRepsChange(exerciseItem.Exercise.id, setIndex, e.target.value)} />
                                         </TableCell>
-                                        <TableCell><Button color="success"><IconCheck size={16} /></Button></TableCell>
+                                        <TableCell><Button isIconOnly color="success"><IconCheck size={16} /></Button></TableCell>
                                     </TableRow>
                                 ))}
                                 {Array.from({ length: additionalSets[exerciseItem.Exercise.id] || 0 }).map((_, setIndex) => (
                                     <TableRow key={exerciseItem.sets + setIndex}>
                                         <TableCell>{exerciseItem.sets + setIndex + 1}</TableCell>
-                                        <TableCell>n/a</TableCell>
                                         <TableCell>
                                             <Input onChange={(e) => handleWeightChange(exerciseItem.Exercise.id, exerciseItem.sets + setIndex, e.target.value)} />
                                         </TableCell>
                                         <TableCell>
                                             <Input onChange={(e) => handleRepsChange(exerciseItem.Exercise.id, exerciseItem.sets + setIndex, e.target.value)} />
                                         </TableCell>
-                                        <TableCell><Button color="success"><IconCheck size={16} /></Button></TableCell>
+                                        <TableCell><Button isIconOnly color="success"><IconCheck size={16} /></Button></TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
                         </Table>
                     </CardBody>
+                    <Divider />
                     <CardFooter>
                         <Button color="secondary" onClick={() => handleAddSet(exerciseItem.Exercise.id)} className="gap-unit-1">
                             <IconPlus size={16} />Add Set</Button>
