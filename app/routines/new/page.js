@@ -88,7 +88,7 @@ export default function NewRoutinePage() {
                     <NewRoutineTable selectedExercises={selectedExercises} setSelectedExercises={setSelectedExercises} />
                 </CardBody>
             </Card>
-            <Button color="danger" onClick={handleSave} className='gap-unit-1'>
+            <Button color="danger" onClick={handleSave} className='gap-unit-1 mb-5'>
                 <IconDeviceFloppy size={16} />Save Routine
             </Button>
         </>

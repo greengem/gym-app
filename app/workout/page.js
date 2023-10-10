@@ -55,7 +55,7 @@ export default async function WorkoutPage() {
     return (
         <>
             <PageHeading title="Start Workout" />
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 pb-5">
                     {routines.map(routine => (
                         <Card key={routine.id}>
                             <CardHeader className="flex gap-3">

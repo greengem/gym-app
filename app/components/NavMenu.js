@@ -9,6 +9,8 @@ import { Link } from "@nextui-org/link";
 import { Button } from "@nextui-org/button";
 import { Avatar } from "@nextui-org/avatar";
 
+import { ThemeSwitcher } from "./ThemeSwitcher";
+
 import { IconBarbell } from '@tabler/icons-react';
 
 function AuthButton() {
@@ -68,6 +70,7 @@ export default function NavMenu() {
                 SyncStrength
               </Link>
           </NavbarBrand>
+          <ThemeSwitcher />
           <NavbarContent as="div" justify="end">
             <AuthButton />
             <AvatarDropdown />

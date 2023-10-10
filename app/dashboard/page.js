@@ -44,7 +44,7 @@ export default async function DashboardPage() {
     return (
         <>
             <PageHeading title="Dashboard" />
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 pb-5">
               <Card><WorkoutFreqOverTime /></Card>
               <Card><VolumeProgression /></Card>
               <Card><ExerciseBreakdown /></Card>

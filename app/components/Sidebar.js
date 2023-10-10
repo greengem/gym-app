@@ -55,14 +55,14 @@ export default function Sidebar() {
       startContent: <IconLogout />,
       text: "Sign Out",
       url: "/api/auth/signout",
-      className: "text-danger", // Add custom class for text color
-      color: "danger", // Add custom color
+      className: "text-danger",
+      color: "danger",
     },
   ];
 
   return (
     <div className="hidden lg:block flex h-screen">
-      <div className="bg-dark-section text-white w-64 fixed h-full">
+      <div className="bg-gray-200 dark:bg-dark-section w-64 fixed h-full">
         <div className="p-3">
           <UserDetail />
           <Listbox aria-label="Actions" variant="flat">
@@ -73,8 +73,8 @@ export default function Sidebar() {
                 key={item.key}
                 description={item.description}
                 startContent={item.startContent}
-                className={item.className} // Conditionally apply the class
-                color={item.color} // Conditionally apply the color
+                className={item.className}
+                color={item.color}
               >
                 {item.text}
               </ListboxItem>

@@ -15,7 +15,7 @@ export default function UserDetail() {
             }}
             className='m-2 mb-5'
         />
-        <Divider />
+        <Divider className='mb-2' />
         </>
     );
 }

@@ -108,7 +108,7 @@ function Workout({ workout }) {
     
 
     return (
-        <div>
+        <div className="pb-5">
             {workout.WorkoutPlanExercise.map((exerciseItem, index) => (
                 <Card className="mb-5" key={exerciseItem.Exercise.id}>
                     <CardHeader>{exerciseItem.Exercise.name}</CardHeader>

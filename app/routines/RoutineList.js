@@ -59,7 +59,7 @@ function RoutineList({ routines }) {
   return (
     <>
       {routines.map((routine) => (
-        <Card key={routine.id} className="mb-5">
+        <Card key={routine.id}>
           <CardHeader className="flex gap-3">
             <Image
               className="bg-white"

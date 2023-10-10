@@ -91,9 +91,15 @@ interface ExerciseListProps {
   exercises: Exercise[];
 }
 
+const statusColorMap = {
+  beginner: "success",
+  expert: "danger",
+  intermediate: "warning",
+};
+
 function ExerciseList({ exercises }: ExerciseListProps): JSX.Element {
   return (
-    <Table aria-label="Exercise Table">
+    <Table aria-label="Exercise Table" className="mb-5">
       <TableHeader>
         <TableColumn>NAME</TableColumn>
         <TableColumn>FORCE</TableColumn>
