@@ -80,7 +80,7 @@ export default function KPIVolumeProgression() {
 
   return (
     <>
-        <CardHeader>Volume Progression</CardHeader>
+        <CardHeader className='px-5 font-semibold'>Volume Progression</CardHeader>
         <CardBody className='p-3'>
             <Bar data={data} options={options} />
         </CardBody>

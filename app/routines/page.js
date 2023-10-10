@@ -1,7 +1,8 @@
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
-import prisma from "@/lib/prisma";
+
+import { fetchRoutines } from "@/utils/FetchRoutines";
 
 import PageHeading from "../components/PageHeading";
 import RoutineList from './RoutineList';
@@ -11,35 +12,6 @@ import NextLink from "next/link";
 import { Link } from "@nextui-org/link";
 
 import { IconPlus } from "@tabler/icons-react";
-
-async function fetchRoutines(userId) {
-    return await prisma.workoutPlan.findMany({
-        where: {
-          userId: userId,
-        },
-        select: {
-          id: true,
-          name: true,
-          notes: true,
-          WorkoutPlanExercise: {
-            select: {
-              Exercise: {
-                select: {
-                  id: true,
-                  name: true,
-                }
-              },
-              sets: true,
-              reps: true,
-              duration: true,
-              order: true,
-            }
-          },
-          createdAt: true,
-          updatedAt: true,
-        }
-    });
-}
 
 export default async function RoutinesPage() {
   const session = await getServerSession(authOptions);

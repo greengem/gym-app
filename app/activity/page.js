@@ -1,26 +1,10 @@
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
-import prisma from "@/lib/prisma";
+import { fetchWorkouts } from "@/utils/FetchWorkouts";
 
 import PageHeading from "../components/PageHeading";
 import WorkoutsList from "./WorkoutsList";
-
-async function fetchWorkouts(userId) {
-  return await prisma.workoutLog.findMany({
-      where: {
-        userId: userId,
-      },
-      include: {
-        exercises: {
-          include: {
-            Exercise: true,
-            sets: true
-          }
-        }
-      }
-  });
-}
 
 export default async function ActivityPage() {
     const session = await getServerSession(authOptions);

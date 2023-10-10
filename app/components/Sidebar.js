@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { usePathname } from 'next/navigation'
 import Link from "next/link";
 import UserDetail from "./UserDetail";
 import { Listbox, ListboxItem } from "@nextui-org/listbox";
@@ -13,6 +14,7 @@ import {
 } from "@tabler/icons-react";
 
 export default function Sidebar() {
+  const pathname = usePathname()
   const sidebarItems = [
     {
       key: "dashboard",
@@ -66,19 +68,24 @@ export default function Sidebar() {
         <div className="p-3">
           <UserDetail />
           <Listbox aria-label="Actions" variant="flat">
-            {sidebarItems.map((item) => (
-              <ListboxItem
-                as={Link}
-                href={item.url}
-                key={item.key}
-                description={item.description}
-                startContent={item.startContent}
-                className={item.className}
-                color={item.color}
-              >
-                {item.text}
-              </ListboxItem>
-            ))}
+            {sidebarItems.map((item) => {
+              // Check if the current item's URL matches the current pathname.
+              const isActive = pathname === item.url;
+              
+              return (
+                <ListboxItem
+                  as={Link}
+                  href={item.url}
+                  key={item.key}
+                  description={item.description}
+                  startContent={item.startContent}
+                  className={isActive ? "text-primary " + (item.className || "") : item.className}
+                  color={isActive ? "primary" : item.color}
+                >
+                  {item.text}
+                </ListboxItem>
+              )
+            })}
           </Listbox>
         </div>
       </div>

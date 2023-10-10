@@ -63,7 +63,7 @@ export default function KPIOneRM() {
 
   return (
     <div>
-      <CardHeader>One-Rep Max (1RM) Estimations</CardHeader>
+      <CardHeader className='px-5 font-semibold'>One-Rep Max (1RM) Estimations</CardHeader>
       <CardBody className='p-3'>
         <Line data={data} options={options} />
       </CardBody>

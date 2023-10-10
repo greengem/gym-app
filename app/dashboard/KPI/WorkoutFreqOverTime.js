@@ -63,7 +63,7 @@ export default function KPIWorkoutFreqOverTime() {
 
   return (
     <>
-    <CardHeader>Workout Frequency Over Time</CardHeader>
+    <CardHeader className='px-5 font-semibold'>Workout Frequency Over Time</CardHeader>
     <CardBody className='p-3'>
         <Line data={data} options={options} />
     </CardBody>

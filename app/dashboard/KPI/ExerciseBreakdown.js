@@ -52,7 +52,7 @@ export default function KPIExerciseBreakdown() {
 
   return (
     <>
-      <CardHeader>Exercise Breakdown</CardHeader>
+      <CardHeader className='px-5 font-semibold'>Exercise Breakdown</CardHeader>
       <CardBody className='p-3' style={{ height: '221px' }}>
         <Pie data={data} options={options} />
       </CardBody>

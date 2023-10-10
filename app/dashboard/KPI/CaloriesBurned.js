@@ -58,7 +58,7 @@ export default function KPICaloriesBurned() {
 
   return (
     <div>
-      <CardHeader>Calories Burned</CardHeader>
+      <CardHeader className='px-5 font-semibold'>Calories Burned</CardHeader>
       <CardBody className='p-3'>
         <Bar data={data} options={options} />
       </CardBody>
