@@ -55,7 +55,7 @@ export default function KPIWorkoutDurations() {
   return (
     <div>
       <CardHeader>Duration of Workouts</CardHeader>
-      <CardBody>
+      <CardBody className='p-3'>
         <Line data={data} options={options} />
       </CardBody>
     </div>

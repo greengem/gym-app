@@ -14,6 +14,9 @@ const config: Config = {
       colors: {
         'blue-start': '#5EA2EF',
         'blue-end': '#0072F5'
+      },
+      backgroundColor: {
+        'dark-section': 'rgb(24, 24, 27)',
       }
     },
   },

@@ -55,12 +55,6 @@ export default async function WorkoutPage() {
     return (
         <>
             <PageHeading title="Start Workout" />
-            <Link as={NextLink} href="/routines/new" className="mb-5">
-                <Button color="primary">
-                    Create New Routine
-                </Button>
-            </Link>
-            <h4 className="font-semibold text-xl mb-5">My Routines:</h4>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
                     {routines.map(routine => (
                         <Card key={routine.id}>

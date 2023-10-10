@@ -4,7 +4,6 @@ import { authOptions } from "../api/auth/[...nextauth]/route";
 import prisma from "@/lib/prisma";
 
 import PageHeading from "../components/PageHeading";
-import UserDetail from "./UserDetail";
 import WorkoutFreqOverTime from "./KPI/WorkoutFreqOverTime"
 import VolumeProgression from "./KPI/VolumeProgression"
 import ExerciseBreakdown from "./KPI/ExerciseBreakdown"
@@ -45,7 +44,6 @@ export default async function DashboardPage() {
     return (
         <>
             <PageHeading title="Dashboard" />
-            <UserDetail />
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
               <Card><WorkoutFreqOverTime /></Card>
               <Card><VolumeProgression /></Card>

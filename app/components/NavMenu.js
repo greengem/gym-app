@@ -59,7 +59,7 @@ export default function NavMenu() {
     const pathname = usePathname();
     
     return (
-        <Navbar maxWidth="full">
+        <Navbar maxWidth="full" isBordered>
           <NavbarBrand>
               <Link color="primary" href="/" as={NextLink}>
                 <IconBarbell className="mr-1" />

@@ -27,7 +27,7 @@ const HeroSection = () => {
                         </Button>
                     </Link>
                 ) : (
-                    <Button size="lg" color="primary" variant="ghost" onClick={() => signIn()} className="z-20">
+                    <Button size="lg" color="primary" variant="ghost" onClick={() => signIn(undefined, { callbackUrl: '/dashboard' })} className="z-20">
                         Sign in
                     </Button>
                 )

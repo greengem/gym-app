@@ -37,8 +37,16 @@ export default function KPIVolumeProgression() {
         borderColor: '#4BC0C0',
         fill: false,
       },
+      {
+        label: 'Other Exercises',
+        data: [4660, 4835, 5010, 4922, 5095],  // Adjusted values
+        type: 'line',
+        borderColor: '#9966FF',
+        fill: false,
+      }
     ]
-  };
+};
+
 
   const options = {
     responsive: true,
@@ -73,7 +81,7 @@ export default function KPIVolumeProgression() {
   return (
     <>
         <CardHeader>Volume Progression</CardHeader>
-        <CardBody>
+        <CardBody className='p-3'>
             <Bar data={data} options={options} />
         </CardBody>
     </>
