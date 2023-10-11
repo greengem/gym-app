@@ -43,22 +43,6 @@ export default function KPIWorkoutFreqOverTime() {
         intersect: false,
       },
     },
-    scales: {
-      x: {
-        display: true,
-        title: {
-          display: true,
-          text: 'Months'
-        }
-      },
-      y: {
-        display: true,
-        title: {
-          display: true,
-          text: 'Number of Workouts'
-        }
-      }
-    },
   };
 
   return (

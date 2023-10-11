@@ -60,22 +60,6 @@ export default function KPIVolumeProgression() {
         intersect: false,
       },
     },
-    scales: {
-      x: {
-        display: true,
-        title: {
-          display: true,
-          text: 'Months'
-        }
-      },
-      y: {
-        display: true,
-        title: {
-          display: true,
-          text: 'Weight Lifted (kg)'
-        }
-      }
-    },
   };
 
   return (

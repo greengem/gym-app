@@ -43,22 +43,6 @@ export default function KPIOneRM() {
         intersect: false,
       },
     },
-    scales: {
-      x: {
-        display: true,
-        title: {
-          display: true,
-          text: 'Months'
-        }
-      },
-      y: {
-        display: true,
-        title: {
-          display: true,
-          text: 'Estimated 1RM (kg)'
-        }
-      }
-    },
   };
 
   return (

@@ -31,25 +31,6 @@ export default function KPIWorkoutDurations() {
         intersect: false,
       },
     },
-    scales: {
-      x: {
-        display: true,
-        title: {
-          display: true,
-          text: 'Date'
-        }
-      },
-      y: {
-        display: true,
-        title: {
-          display: true,
-          text: 'Duration (minutes)'
-        },
-        ticks: {
-          beginAtZero: true,
-        }
-      }
-    },
   };
 
   return (
