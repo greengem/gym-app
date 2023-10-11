@@ -6,7 +6,9 @@ import {
   TableColumn,
   TableRow,
   TableCell,
-} from "@nextui-org/table";
+  Pagination, 
+  getKeyValue
+} from "@nextui-org/react";
 
 interface Exercise {
   id: string;
@@ -99,6 +101,7 @@ const statusColorMap = {
 
 function ExerciseList({ exercises }: ExerciseListProps): JSX.Element {
   return (
+    <>
     <Table aria-label="Exercise Table" className="mb-5">
       <TableHeader>
         <TableColumn>NAME</TableColumn>
@@ -122,6 +125,10 @@ function ExerciseList({ exercises }: ExerciseListProps): JSX.Element {
         ))}
       </TableBody>
     </Table>
+      <div className="flex w-full justify-center">
+
+    </div>
+        </>
   );
 }
 

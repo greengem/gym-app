@@ -1,7 +1,7 @@
 import { cache } from 'react';
 import prisma from "@/lib/prisma";
 
-export const revalidate = 600; // Adjust as needed. This sets the cache to 10 minutes.
+export const revalidate = 60; //60 Seconds
 
 export const fetchRoutines = cache(async function(userId) {
   return await prisma.workoutPlan.findMany({
@@ -26,7 +26,6 @@ export const fetchRoutines = cache(async function(userId) {
               order: true,
             }
           },
-          createdAt: true,
           updatedAt: true,
         }
     });

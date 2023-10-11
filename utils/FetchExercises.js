@@ -3,7 +3,8 @@ import prisma from "@/lib/prisma";
 
 export const revalidate = 86400; //Revalidate every day since data rarely changes
 
-export const fetchExercises = cache(async () => {
+export const fetchExercises = cache(async function(page = 1, rowsPerPage = 20) {
+  const skip = (page - 1) * rowsPerPage;
   return await prisma.exercise.findMany({
     select: {
         id: true,
@@ -21,7 +22,8 @@ export const fetchExercises = cache(async () => {
         tips: true,
         date_created: true,
         date_updated: true,
-      },
-    take: 20,
+    },
+    skip: skip,
+    take: rowsPerPage,
   });
 });
