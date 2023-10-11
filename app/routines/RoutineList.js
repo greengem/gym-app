@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from 'next/navigation'
+import FormattedDate from '@/app/components/FormattedDate'
 
 import {
   Table,
@@ -24,11 +25,11 @@ async function deleteRoutine(routineId) {
     });
 
     if (!response.ok) {
-      throw new Error('Failed to delete routine');
+      throw new Error('Client failed to delete routine');
     }
 
   } catch (error) {
-    console.error('Error deleting routine:', error);
+    console.error('Client error deleting routine:', error);
   }
 }
 
@@ -58,20 +59,21 @@ function RoutineList({ routines }) {
 
   return (
     <>
-      {routines.map((routine) => (
+    
+    {routines.length > 0 ? 
+      routines.map((routine) => (
         <Card key={routine.id}>
           <CardHeader className="flex gap-3">
             <Image
-              className="bg-white"
               alt="Workout Icon"
               height={40}
               radius="sm"
-              src="/icons/tabler-icon-barbell-black.svg"
+              src="/icons/tabler-icon-barbell-white.svg"
               width={40}
             />
             <div className="flex flex-col">
               <p className="text-md">{routine.name}</p>
-              <p className="text-small text-default-500">nextui.org</p>
+              <p className="text-small text-default-500">Last updated: <FormattedDate dateString={routine.updatedAt} /></p>
             </div>
           </CardHeader>
           <Divider />
@@ -107,16 +109,19 @@ function RoutineList({ routines }) {
               <IconTrash size={16} />Delete</Button>
           </CardFooter>
         </Card>
-      ))}
-              <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalContent>
-              <ModalHeader className="flex flex-col gap-1">Modal Title</ModalHeader>
-              <ModalBody><p>Are you sure you want to delete this routine?</p></ModalBody>
-              <ModalFooter>
+      ))
+      : 
+        <p>No routines saved.</p>
+      }
+        <Modal isOpen={isOpen} onClose={onClose}>
+          <ModalContent>
+            <ModalHeader className="flex flex-col gap-1">Modal Title</ModalHeader>
+            <ModalBody><p>Are you sure you want to delete this routine?</p></ModalBody>
+            <ModalFooter>
               <Button variant="light" onPress={onClose}>Cancel</Button>
               <Button color="danger" onClick={handleConfirmDelete}>Delete</Button>
-              </ModalFooter>
-        </ModalContent>
+            </ModalFooter>
+          </ModalContent>
         </Modal>
         </>
 

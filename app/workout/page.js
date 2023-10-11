@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import prisma from "@/lib/prisma";
-
+import FormattedDate from '@/app/components/FormattedDate'
 import PageHeading from "../components/PageHeading";
 
 import {Card, CardHeader, CardBody, CardFooter} from "@nextui-org/card";
@@ -37,7 +37,6 @@ async function fetchRoutines(userId) {
                 order: true,
             }
             },
-            createdAt: true,
             updatedAt: true,
         }
     });
@@ -55,8 +54,9 @@ export default async function WorkoutPage() {
     return (
         <>
             <PageHeading title="Start Workout" />
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 pb-5">
-                    {routines.map(routine => (
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 pb-5">
+            {routines.length > 0 ? 
+                routines.map(routine => (
                         <Card key={routine.id}>
                             <CardHeader className="flex gap-3">
                                 <Image
@@ -68,7 +68,7 @@ export default async function WorkoutPage() {
                                 />
                                 <div className="flex flex-col">
                                     <p className="text-md text-truncate">{routine.name}</p>
-                                    <p className="text-small text-default-500">nextui.org</p>
+                                    <p className="text-small text-default-500">Last updated: <FormattedDate dateString={routine.updatedAt} /></p>
                                 </div>
                             </CardHeader>
                             <Divider />
@@ -89,7 +89,10 @@ export default async function WorkoutPage() {
                                 </Link>
                             </CardFooter>
                         </Card>
-                    ))}
+                    ))
+                    : 
+                        <p>No routines available, <Link as={NextLink} href="/routines/new">create one</Link> first.</p>
+                    }
             </div>
 
         </>

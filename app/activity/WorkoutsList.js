@@ -1,6 +1,6 @@
 'use client'
 import React from "react";
-import FormattedDate from '../components/FormattedDate'
+import FormattedDate from '@/app/components/FormattedDate'
 
 import {
   Table,
@@ -15,6 +15,8 @@ import {  Modal,   ModalContent,   ModalHeader,   ModalBody,   ModalFooter, useD
 import { Button } from "@nextui-org/button";
 import {Image} from "@nextui-org/react";
 import NextImage from "next/image";
+import {Link} from "@nextui-org/react";
+import NextLink from "next/link";
 
 import { IconInfoCircle } from '@tabler/icons-react';
 
@@ -29,7 +31,8 @@ function WorkoutsList({ workouts }) {
 
     return (
         <>
-            {workouts.map((workout) => (
+            {workouts.length > 0 ? 
+            workouts.map((workout) => (
                 <Card key={workout.id}>
                     <CardHeader className="flex gap-3">
                         <Image
@@ -76,7 +79,10 @@ function WorkoutsList({ workouts }) {
                         <Button size="sm" color="danger">Delete Activity</Button>
                     </CardFooter>
                 </Card>
-            ))}
+            ))
+            : 
+                <p><Link as={NextLink} href="/workout">Start a workout</Link> to begin logging data.</p>
+            }
 
             {selectedWorkout && (
                 <Modal scrollBehavior="inside" isOpen={isOpen} onOpenChange={onClose} >
