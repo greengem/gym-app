@@ -1,4 +1,7 @@
 'use client'
+import { useState } from "react";
+import ExerciseSearch from "./ExerciseSearch";
+import ExerciseFilters from "./ExerciseFilters"
 import {
   Table,
   TableHeader,
@@ -6,10 +9,9 @@ import {
   TableColumn,
   TableRow,
   TableCell,
-  Pagination, 
-  getKeyValue
-} from "@nextui-org/react";
-
+} from "@nextui-org/table";
+import { Chip } from "@nextui-org/chip";
+import { Pagination  } from "@nextui-org/react"
 interface Exercise {
   id: string;
   name: string;
@@ -80,9 +82,9 @@ enum ForceType {
 }
 
 enum LevelType {
-  beginner,
-  intermediate,
-  expert
+  beginner = "beginner",
+  intermediate = "intermediate",
+  expert = "expert"
 }
 
 enum MechanicType {
@@ -93,42 +95,85 @@ interface ExerciseListProps {
   exercises: Exercise[];
 }
 
-const statusColorMap = {
+const levelColorMap: { [key in LevelType]: "success" | "warning" | "danger" } = {
   beginner: "success",
-  expert: "danger",
   intermediate: "warning",
+  expert: "danger",
 };
 
 function ExerciseList({ exercises }: ExerciseListProps): JSX.Element {
+  const [page, setPage] = useState(1);
+  const rowsPerPage = 10;
+  const [filters, setFilters] = useState({ category: null, muscleGroup: null });
+  const [searchQuery, setSearchQuery] = useState(""); // Step 1: State for search query
+
+  const filteredExercises = exercises.filter((exercise) => {
+    if (filters.category && exercise.category !== filters.category) return false;
+    if (
+      filters.muscleGroup &&
+      !exercise.primary_muscles.includes(filters.muscleGroup) &&
+      !exercise.secondary_muscles.includes(filters.muscleGroup)
+    )
+      return false;
+
+    // Step 3: Filter based on search query
+    if (
+      searchQuery &&
+      !exercise.name.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+      return false;
+
+    return true;
+  });
+
+  const displayedExercises = filteredExercises.slice(
+    (page - 1) * rowsPerPage,
+    page * rowsPerPage
+  );
   return (
     <>
-    <Table aria-label="Exercise Table" className="mb-5">
-      <TableHeader>
-        <TableColumn>NAME</TableColumn>
-        <TableColumn>FORCE</TableColumn>
-        <TableColumn>LEVEL</TableColumn>
-        <TableColumn>MECHANIC</TableColumn>
-        <TableColumn>EQUIPMENT</TableColumn>
-        <TableColumn>CATEGORY</TableColumn>
-      </TableHeader>
-      <TableBody>
-        {exercises.map((exercise) => (
-          <TableRow key={exercise.id}>
-            <TableCell>{exercise.name}</TableCell>
-            <TableCell>{exercise.force}</TableCell>
-            <TableCell>{exercise.level}</TableCell>
-            <TableCell>{exercise.mechanic}</TableCell>
-            <TableCell>{exercise.equipment}</TableCell>
-            <TableCell>{exercise.category}</TableCell>
-
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+        <ExerciseSearch setSearchQuery={setSearchQuery} />
+        <ExerciseFilters onFilterChange={setFilters} />
+      </div>
+      <Table aria-label="Exercise Table" className="mb-5">
+        <TableHeader>
+          <TableColumn>NAME</TableColumn>
+          <TableColumn>FORCE</TableColumn>
+          <TableColumn>LEVEL</TableColumn>
+          <TableColumn>MECHANIC</TableColumn>
+          <TableColumn>EQUIPMENT</TableColumn>
+          <TableColumn>CATEGORY</TableColumn>
+        </TableHeader>
+        <TableBody>
+          {displayedExercises.map((exercise) => (
+            <TableRow key={exercise.id}>
+              <TableCell>{exercise.name}</TableCell>
+              <TableCell className="capitalize">{exercise.force}</TableCell>
+              <TableCell>
+                <Chip className="capitalize" color={levelColorMap[exercise.level]} size="sm" variant="flat">
+                  {exercise.level}
+                </Chip>
+              </TableCell>
+              <TableCell className="capitalize">{exercise.mechanic}</TableCell>
+              <TableCell className="capitalize">{exercise.equipment}</TableCell>
+              <TableCell className="capitalize">{exercise.category}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
       <div className="flex w-full justify-center">
-
-    </div>
-        </>
+        <Pagination
+          isCompact
+          showControls
+          showShadow
+          color="primary"
+          page={page}
+          total={Math.ceil(filteredExercises.length / rowsPerPage)}
+          onChange={(newPage) => setPage(newPage)}
+        />
+      </div>
+    </>
   );
 }
 
