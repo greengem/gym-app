@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from 'next/navigation'
 import {
   Table, TableHeader, TableBody, TableColumn, TableRow, TableCell,
   Card, CardHeader, CardBody, CardFooter,
@@ -116,7 +117,7 @@ function Workout({ workout }) {
       const responseData = await response.json();
   
       if (response.ok) {
-        console.log('Workout saved successfully!', responseData);
+        router.push("/activity")
       } else {
         console.error('Failed to save workout:', responseData.error);
       }
