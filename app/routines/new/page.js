@@ -47,8 +47,6 @@ export default function NewRoutinePage() {
     
             if (response.ok) {
                 const result = await response.json();
-                console.log(result);
-                
                 router.push("/routines")
             } else {
                 alert("Failed to save routine.");
