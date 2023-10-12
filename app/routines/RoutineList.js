@@ -77,12 +77,15 @@ function RoutineList({ routines }) {
             </div>
           </CardHeader>
           <Divider />
-          <CardBody className="px-3 pt-0">
-          <Accordion isCompact>
-            <AccordionItem key="1" aria-label="Notes" title="Notes">
-            {routine.notes && <p className="text-sm mb-3 text-gray-500">{routine.notes}</p>}
-            </AccordionItem>
-          </Accordion>
+          <CardBody className="px-3">
+{routine.notes && (
+  <Accordion isCompact>
+    <AccordionItem key="1" aria-label="Notes" title="Notes">
+      <p className="text-sm mb-3 text-gray-500">{routine.notes}</p>
+    </AccordionItem>
+  </Accordion>
+)}
+
           
             <Table removeWrapper aria-label="Routine exercises table">
               <TableHeader>
