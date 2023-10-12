@@ -21,8 +21,7 @@ export function ThemeSwitcher() {
     <div>
       <Switch
         defaultSelected={isDarkMode}
-        size="lg"
-        color="primary"
+        color="secondary"
         startContent={<SunIcon />}
         endContent={<MoonIcon />}
         onChange={(event) => {
