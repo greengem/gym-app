@@ -207,11 +207,13 @@ function ExerciseList({ exercises }: ExerciseListProps): JSX.Element {
                     src={`${selectedExercise.imagePath}0.jpg`} 
                     width={750}
                     height={500} 
+                    alt="Exercise photo 1"
                   />
                                     <Image 
                     src={`${selectedExercise.imagePath}1.jpg`} 
                     width={750}
                     height={500} 
+                    alt="Exercise photo 2"
                   />
                   </div>
 <ul className="space-y-2">
