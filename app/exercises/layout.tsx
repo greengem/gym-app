@@ -1,4 +1,5 @@
-import Sidebar from "../components/Sidebar"
+import Sidebar from "@/app/components/Sidebar"
+import NavMenu from '@/app/components/NavMenu'
 
 export default function ProjectsLayout({
   children,
@@ -6,14 +7,14 @@ export default function ProjectsLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className="flex flex-col min-h-screen">
-      <main className="flex flex-grow">
+    <main className="flex flex-col min-h-screen">
+      <div className="flex flex-grow">
         <Sidebar />
         <div className="ml-0 lg:ml-64 flex-1 px-5">
+          <NavMenu />
           {children}
         </div>
-      </main>
-    </div>
-
+      </div>
+    </main>
   );
 }
