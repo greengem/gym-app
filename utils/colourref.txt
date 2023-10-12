@@ -1,0 +1,5 @@
+primary: #0070F0
+secondary: #9455D3
+success: #18C964
+warning: #F5A524
+danger: #F31260
