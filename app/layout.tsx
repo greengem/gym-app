@@ -23,7 +23,7 @@ export default async function RootLayout({
       <body>
         <SessionProvider session={session}>
           <Providers>
-
+            <NavMenu />
               {children}
           </Providers>
         </SessionProvider>
