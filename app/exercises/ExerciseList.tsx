@@ -136,6 +136,7 @@ function ExerciseList({ exercises }: ExerciseListProps): JSX.Element {
         <ExerciseSearch setSearchQuery={setSearchQuery} />
         <ExerciseFilters onFilterChange={setFilters} />
       </div>
+      <div className="overflow-x-auto">
       <Table aria-label="Exercise Table" className="mb-5">
         <TableHeader>
           <TableColumn>NAME</TableColumn>
@@ -168,6 +169,7 @@ function ExerciseList({ exercises }: ExerciseListProps): JSX.Element {
           ))}
         </TableBody>
       </Table>
+      </div>
       <div className="flex w-full justify-center">
         <Pagination
           isCompact
