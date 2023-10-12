@@ -128,17 +128,16 @@ function Workout({ workout }) {
 
   return (
     <div className="pb-5">
-{workout.WorkoutPlanExercise.map((exerciseItem, index) => (
-  <ExerciseSet 
-    key={index}
-    exerciseItem={exerciseItem}
-    workoutData={workoutData}
-    handleValueChange={handleValueChange}
-    handleAddSet={handleAddSet}
-    handleDeleteLastSet={handleDeleteLastSet}
-  />
-))}
-
+      {workout.WorkoutPlanExercise.map((exerciseItem, index) => (
+        <ExerciseSet 
+          key={index}
+          exerciseItem={exerciseItem}
+          workoutData={workoutData}
+          handleValueChange={handleValueChange}
+          handleAddSet={handleAddSet}
+          handleDeleteLastSet={handleDeleteLastSet}
+        />
+      ))}
       <Button color="success" onClick={completeWorkout} className="mr-2 gap-unit-1">
         <IconDeviceFloppy size={16} />Complete Workout
       </Button>

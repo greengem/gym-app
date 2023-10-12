@@ -69,7 +69,6 @@ export default function Sidebar() {
           <UserDetail />
           <Listbox aria-label="Actions" variant="flat">
             {sidebarItems.map((item) => {
-              // Check if the current item's URL matches the current pathname.
               const isActive = pathname === item.url;
               
               return (

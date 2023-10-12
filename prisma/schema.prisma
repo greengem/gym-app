@@ -68,6 +68,7 @@ model Exercise {
   instructions        String[]
   description         String?
   tips                String[]
+  imagePath String?
   date_created        DateTime              @default(now())
   date_updated        DateTime?             @default(now())
   WorkoutPlanExercise WorkoutPlanExercise[]

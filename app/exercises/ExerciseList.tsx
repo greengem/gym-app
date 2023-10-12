@@ -11,7 +11,7 @@ import {
   TableCell,
 } from "@nextui-org/table";
 import { Chip } from "@nextui-org/chip";
-import { Pagination  } from "@nextui-org/react"
+import { Pagination, User } from "@nextui-org/react"
 interface Exercise {
   id: string;
   name: string;
@@ -25,6 +25,7 @@ interface Exercise {
   category: CategoryType;
   instructions: string[];
   description?: string;
+  imagePath?: string;
   tips: string[];
   date_created: Date;
   date_updated?: Date;
@@ -105,7 +106,7 @@ function ExerciseList({ exercises }: ExerciseListProps): JSX.Element {
   const [page, setPage] = useState(1);
   const rowsPerPage = 10;
   const [filters, setFilters] = useState({ category: null, muscleGroup: null });
-  const [searchQuery, setSearchQuery] = useState(""); // Step 1: State for search query
+  const [searchQuery, setSearchQuery] = useState("");
 
   const filteredExercises = exercises.filter((exercise) => {
     if (filters.category && exercise.category !== filters.category) return false;
@@ -116,7 +117,6 @@ function ExerciseList({ exercises }: ExerciseListProps): JSX.Element {
     )
       return false;
 
-    // Step 3: Filter based on search query
     if (
       searchQuery &&
       !exercise.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -139,25 +139,31 @@ function ExerciseList({ exercises }: ExerciseListProps): JSX.Element {
       <Table aria-label="Exercise Table" className="mb-5">
         <TableHeader>
           <TableColumn>NAME</TableColumn>
-          <TableColumn>FORCE</TableColumn>
+          <TableColumn>PRIMARY MUSCLES</TableColumn>
           <TableColumn>LEVEL</TableColumn>
-          <TableColumn>MECHANIC</TableColumn>
-          <TableColumn>EQUIPMENT</TableColumn>
-          <TableColumn>CATEGORY</TableColumn>
+          
         </TableHeader>
         <TableBody>
           {displayedExercises.map((exercise) => (
             <TableRow key={exercise.id}>
-              <TableCell>{exercise.name}</TableCell>
-              <TableCell className="capitalize">{exercise.force}</TableCell>
+              <TableCell className="capitalize">
+                <User
+                  avatarProps={{radius: "lg", src: exercise.imagePath}}
+                  description={exercise.category}
+                  name={exercise.name}
+                />
+                </TableCell>
+              <TableCell className="capitalize">
+              <div className="flex flex-col">
+                <p className="text-bold text-small capitalize">{exercise.primary_muscles.join(', ')}</p>
+                <p className="text-bold text-tiny capitalize text-default-400">{exercise.secondary_muscles.join(', ')}</p>
+              </div>
+              </TableCell>
               <TableCell>
                 <Chip className="capitalize" color={levelColorMap[exercise.level]} size="sm" variant="flat">
                   {exercise.level}
                 </Chip>
               </TableCell>
-              <TableCell className="capitalize">{exercise.mechanic}</TableCell>
-              <TableCell className="capitalize">{exercise.equipment}</TableCell>
-              <TableCell className="capitalize">{exercise.category}</TableCell>
             </TableRow>
           ))}
         </TableBody>
