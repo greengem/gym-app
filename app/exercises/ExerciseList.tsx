@@ -2,6 +2,7 @@
 import { useState } from "react";
 import ExerciseSearch from "./ExerciseSearch";
 import ExerciseFilters from "./ExerciseFilters"
+import { IconInfoCircle } from "@tabler/icons-react";
 import {
   Table,
   TableHeader,
@@ -10,8 +11,12 @@ import {
   TableRow,
   TableCell,
 } from "@nextui-org/table";
+import {  Modal,   ModalContent,   ModalHeader,   ModalBody,   ModalFooter} from "@nextui-org/modal";
 import { Chip } from "@nextui-org/chip";
-import { Pagination, User } from "@nextui-org/react"
+import { Pagination, User, Button, useDisclosure } from "@nextui-org/react"
+import {Image} from "@nextui-org/react";
+import NextImage from "next/image";
+
 interface Exercise {
   id: string;
   name: string;
@@ -104,7 +109,7 @@ const levelColorMap: { [key in LevelType]: "success" | "warning" | "danger" } = 
 
 function ExerciseList({ exercises }: ExerciseListProps): JSX.Element {
   const [page, setPage] = useState(1);
-  const rowsPerPage = 10;
+  const rowsPerPage = 8;
   const [filters, setFilters] = useState({ category: null, muscleGroup: null });
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -130,6 +135,10 @@ function ExerciseList({ exercises }: ExerciseListProps): JSX.Element {
     (page - 1) * rowsPerPage,
     page * rowsPerPage
   );
+
+  const [selectedExercise, setSelectedExercise] = useState<Exercise | null>(null);
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
@@ -140,8 +149,9 @@ function ExerciseList({ exercises }: ExerciseListProps): JSX.Element {
       <Table aria-label="Exercise Table" className="mb-5">
         <TableHeader>
           <TableColumn>NAME</TableColumn>
-          <TableColumn>PRIMARY MUSCLES</TableColumn>
+          <TableColumn>MUSCLES</TableColumn>
           <TableColumn>LEVEL</TableColumn>
+          <TableColumn><></></TableColumn>
           
         </TableHeader>
         <TableBody>
@@ -149,7 +159,7 @@ function ExerciseList({ exercises }: ExerciseListProps): JSX.Element {
             <TableRow key={exercise.id}>
               <TableCell className="capitalize">
                 <User
-                  avatarProps={{radius: "lg", src: exercise.imagePath}}
+                  avatarProps={{ radius: "lg", src: `${exercise.imagePath}0.jpg` }}
                   description={exercise.category}
                   name={exercise.name}
                 />
@@ -161,10 +171,14 @@ function ExerciseList({ exercises }: ExerciseListProps): JSX.Element {
               </div>
               </TableCell>
               <TableCell>
-                <Chip className="capitalize" color={levelColorMap[exercise.level]} size="sm" variant="flat">
+                <Chip radius="sm" className="capitalize" color={levelColorMap[exercise.level]} size="sm" variant="flat">
                   {exercise.level}
                 </Chip>
               </TableCell>
+              <TableCell className="flex justify-end"><Button size="sm" isIconOnly onPress={() => {
+                      setSelectedExercise(exercise);
+                      onOpen();
+                    }}><IconInfoCircle /></Button></TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -181,6 +195,62 @@ function ExerciseList({ exercises }: ExerciseListProps): JSX.Element {
           onChange={(newPage) => setPage(newPage)}
         />
       </div>
+            {selectedExercise && (
+        <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="3xl" scrollBehavior="inside">
+          <ModalContent>
+            {(onClose) => (
+              <>
+                <ModalHeader className="flex flex-col gap-1">{selectedExercise.name}</ModalHeader>
+                <ModalBody>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                  <Image 
+                    src={`${selectedExercise.imagePath}0.jpg`} 
+                    width={750}
+                    height={500} 
+                  />
+                                    <Image 
+                    src={`${selectedExercise.imagePath}1.jpg`} 
+                    width={750}
+                    height={500} 
+                  />
+                  </div>
+<ul className="space-y-2">
+  {selectedExercise.category && 
+    <li className="capitalize"><strong className="text-primary">Category:</strong> {selectedExercise.category}</li>}
+  
+  {selectedExercise.primary_muscles && selectedExercise.primary_muscles.length > 0 && 
+    <li className="capitalize"><strong className="text-primary">Primary Muscles:</strong> {selectedExercise.primary_muscles.join(', ')}</li>}
+  
+  {selectedExercise.secondary_muscles && selectedExercise.secondary_muscles.length > 0 &&
+    <li className="capitalize"><strong className="text-primary">Secondary Muscles:</strong> {selectedExercise.secondary_muscles.join(', ')}</li>}
+  
+  {selectedExercise.force && 
+    <li className="capitalize"><strong className="text-primary">Force:</strong> {selectedExercise.force}</li>}
+  
+  {selectedExercise.mechanic &&
+    <li className="capitalize"><strong className="text-primary">Mechanic:</strong> {selectedExercise.mechanic}</li>}
+  
+  {selectedExercise.equipment && 
+    <li className="capitalize"><strong className="text-primary">Equipment:</strong> {selectedExercise.equipment}</li>}
+  
+  {selectedExercise.instructions &&
+    <li><strong className="text-primary">Instructions:</strong> {selectedExercise.instructions}</li>}
+  
+  {selectedExercise.tips && selectedExercise.tips.length > 0 && 
+    <li className="capitalize"><strong className="text-primary">Tips:</strong> {selectedExercise.tips.join(', ')}</li>}
+</ul>
+
+                </ModalBody>
+                <ModalFooter>
+                  <Button color="danger" variant="light" onPress={onClose}>
+                    Close
+                  </Button>
+                </ModalFooter>
+              </>
+            )}
+          </ModalContent>
+        </Modal>
+      )}
     </>
   );
 }
