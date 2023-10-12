@@ -9,7 +9,7 @@ import { Link } from "@nextui-org/link";
 import { Button } from "@nextui-org/button";
 import { Avatar } from "@nextui-org/avatar";
 
-import { ThemeSwitcher } from "./ThemeSwitcher";
+import { ThemeSwitcher } from "@/app/components/ThemeSwitcher";
 
 import { IconBarbell } from '@tabler/icons-react';
 
@@ -61,7 +61,7 @@ export default function NavMenu() {
     const pathname = usePathname();
     
     return (
-        <Navbar maxWidth="full" isBordered>
+        <Navbar maxWidth="full" className="block lg:hidden">
           <NavbarBrand>
               <Link color="primary" href="/" as={NextLink}>
                 <IconBarbell className="mr-1" />
