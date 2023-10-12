@@ -26,10 +26,10 @@ function ExerciseSet({ exerciseItem, workoutData, handleValueChange, handleAddSe
               <TableRow key={setIndex}>
                 <TableCell>{setIndex + 1}</TableCell>
                 <TableCell>
-                  <Input onChange={(e) => handleValueChange('weight', exerciseItem.Exercise.id, setIndex, e.target.value)} />
+                  <Input type="number" onChange={(e) => handleValueChange('weight', exerciseItem.Exercise.id, setIndex, e.target.value)} />
                 </TableCell>
                 <TableCell>
-                  <Input onChange={(e) => handleValueChange('reps', exerciseItem.Exercise.id, setIndex, e.target.value)} />
+                  <Input type="number" onChange={(e) => handleValueChange('reps', exerciseItem.Exercise.id, setIndex, e.target.value)} />
                 </TableCell>
               </TableRow>
             ))}
