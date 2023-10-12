@@ -10,8 +10,8 @@ import { IconDashboard } from '@tabler/icons-react';
 const HeroSection = () => {
     const { data: session } = useSession();
     return (
-        <div className="relative text-white h-hero flex flex-col justify-center items-center bg-gradient-to-t from-gray-800 to-black">
-            <h1 className='tracking-tight font-bold text-6xl md:text-7xl lg:text-7xl mb-10 z-20'>
+        <div className="relative text-white h-screen flex flex-col justify-center items-center bg-gradient-to-t from-gray-800 to-black">
+            <h1 className='tracking-tight font-bold text-4xl md:text-5xl lg:text-8xl mb-10 z-20'>
                 <span>Lift.</span>
                 <span className="from-[#5EA2EF] to-[#0072F5] bg-clip-text text-transparent bg-gradient-to-b">
                     Learn.
