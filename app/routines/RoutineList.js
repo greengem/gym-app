@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useRouter } from 'next/navigation'
 import FormattedDate from '@/app/components/FormattedDate'
 
+import NextImage from "next/image";
 import {
   Table,
   TableHeader,
@@ -13,10 +14,14 @@ import {
 } from "@nextui-org/table";
 import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
 import { Button } from "@nextui-org/button";
-import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure, Image, Divider} from "@nextui-org/react";
-import {Accordion, AccordionItem} from "@nextui-org/accordion";
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from "@nextui-org/modal";
+import { Accordion, AccordionItem } from "@nextui-org/accordion";
+import { Image } from "@nextui-org/image";
+import { Divider} from "@nextui-org/divider";
+import { useDisclosure } from "@nextui-org/react";
 
-import { IconTrash, IconNote } from "@tabler/icons-react";
+
+import { IconTrash } from "@tabler/icons-react";
 
 async function deleteRoutine(routineId) {
   try {
@@ -59,12 +64,12 @@ function RoutineList({ routines }) {
 
   return (
     <>
-    
     {routines.length > 0 ? 
       routines.map((routine) => (
         <Card key={routine.id}>
           <CardHeader className="flex gap-3">
             <Image
+              as={NextImage}
               alt="Workout Icon"
               height={40}
               radius="sm"
@@ -78,15 +83,13 @@ function RoutineList({ routines }) {
           </CardHeader>
           <Divider />
           <CardBody className="px-3">
-{routine.notes && (
-  <Accordion isCompact>
-    <AccordionItem key="1" aria-label="Notes" title="Notes">
-      <p className="text-sm mb-3 text-gray-500">{routine.notes}</p>
-    </AccordionItem>
-  </Accordion>
-)}
-
-          
+            {routine.notes && (
+              <Accordion isCompact>
+                <AccordionItem key="1" aria-label="Notes" title="Notes">
+                  <p className="text-sm mb-3 text-gray-500">{routine.notes}</p>
+                </AccordionItem>
+              </Accordion>
+            )}
             <Table removeWrapper aria-label="Routine exercises table">
               <TableHeader>
                 <TableColumn>EXERCISE</TableColumn>
@@ -127,9 +130,7 @@ function RoutineList({ routines }) {
           </ModalContent>
         </Modal>
         </>
-
   );
 }
-
 
 export default RoutineList;

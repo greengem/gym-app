@@ -1,7 +1,10 @@
 'use client'
 import React from "react";
+import { useRouter } from 'next/navigation'
 import FormattedDate from '@/app/components/FormattedDate'
 
+import NextLink from "next/link";
+import NextImage from "next/image";
 import {
   Table,
   TableHeader,
@@ -11,22 +14,53 @@ import {
   TableCell,
 } from "@nextui-org/table";
 import { Card, CardBody, CardHeader, CardFooter } from '@nextui-org/card';
-import {  Modal,   ModalContent,   ModalHeader,   ModalBody,   ModalFooter, useDisclosure, Divider} from "@nextui-org/react";
+import {  Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from "@nextui-org/modal";
 import { Button } from "@nextui-org/button";
-import {Image} from "@nextui-org/react";
-import NextImage from "next/image";
-import {Link} from "@nextui-org/react";
-import NextLink from "next/link";
+import { Image } from "@nextui-org/image";
+import { Link } from "@nextui-org/link";
+import { Divider} from "@nextui-org/divider";
+import { useDisclosure } from "@nextui-org/react";
 
-import { IconInfoCircle } from '@tabler/icons-react';
+import { IconInfoCircle, IconTrash } from '@tabler/icons-react';
+
+async function deleteWorkout(workoutId) {
+    console.log('Attempting to delete workout with ID:', workoutId);
+    try {
+      const response = await fetch(`/api/workouts/${workoutId}`, {
+        method: 'DELETE',
+      });
+
+      const responseData = await response.json();
+      console.log('Response from server:', responseData);
+      
+      if (!response.ok) {
+        throw new Error('Failed to delete workout');
+      }
+      return true;
+  
+    } catch (error) {
+      console.error('Error deleting workout:', error);
+      return false;
+    }
+}
 
 function WorkoutsList({ workouts }) {
+    const router = useRouter();
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [selectedWorkout, setSelectedWorkout] = React.useState(null);
 
     const handleMoreDetailsClick = (workout) => {
         setSelectedWorkout(workout);
         onOpen();
+    };
+
+    const handleDelete = async () => {
+        const wasDeleted = await deleteWorkout(selectedWorkout.id);
+        if (wasDeleted) {
+            onClose();
+            setSelectedWorkout(null);
+            router.refresh();
+        }
     };
 
     return (
@@ -76,7 +110,6 @@ function WorkoutsList({ workouts }) {
                         <Button size="sm" className="gap-unit-1 mr-2" color="secondary" onPress={() => handleMoreDetailsClick(workout)}>
                             <IconInfoCircle size={16} />More Details
                         </Button>
-                        <Button size="sm" color="danger">Delete Activity</Button>
                     </CardFooter>
                 </Card>
             ))
@@ -114,9 +147,13 @@ function WorkoutsList({ workouts }) {
                                     </ul>
                                 </ModalBody>
                                 <ModalFooter>
-                                    <Button color="danger" onPress={onCloseModal}>
+                                    <Button color="danger" onClick={handleDelete}>
+                                        <IconTrash size={16} />Delete Activity
+                                    </Button>
+                                    <Button onPress={onCloseModal}>
                                         Close
                                     </Button>
+                                    
                                 </ModalFooter>
                             </>
                         )}

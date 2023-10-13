@@ -119,7 +119,7 @@ model WorkoutLogExercise {
   workoutLogId  String
   exerciseId    String
   Exercise      Exercise   @relation(fields: [exerciseId], references: [id])
-  WorkoutLog    WorkoutLog @relation(fields: [workoutLogId], references: [id])
+  WorkoutLog    WorkoutLog @relation(fields: [workoutLogId], references: [id], onDelete: Cascade)
   sets          SetLog[]
 }
 
@@ -129,7 +129,7 @@ model SetLog {
   weight              Float
   reps                Int
   order               Int?
-  WorkoutLogExercise  WorkoutLogExercise @relation(fields: [workoutLogExerciseId], references: [id])
+  WorkoutLogExercise  WorkoutLogExercise @relation(fields: [workoutLogExerciseId], references: [id], onDelete: Cascade)
 }
 
 
