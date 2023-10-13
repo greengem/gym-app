@@ -19,10 +19,11 @@ import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from "@nextu
 import { Accordion, AccordionItem } from "@nextui-org/accordion";
 import { Image } from "@nextui-org/image";
 import { Divider} from "@nextui-org/divider";
+import {Link} from "@nextui-org/link";
+import NextLink from "next/link";
 import { useDisclosure } from "@nextui-org/react";
 
-
-import { IconTrash } from "@tabler/icons-react";
+import { IconTrash, IconEdit } from "@tabler/icons-react";
 
 async function deleteRoutine(routineId) {
   try {
@@ -113,8 +114,14 @@ function RoutineList({ routines }) {
           </CardBody>
           <Divider />
           <CardFooter>
+            <Link as={NextLink} href={`/routines/${routine.id}`}> 
+              <Button size="sm" color="secondary" className="gap-unit-1 mr-2">
+                <IconEdit size={16} />Edit Routine
+              </Button>
+            </Link>
             <Button size="sm" color="danger" onPress={() => handleDeletePress(routine.id)} className="gap-unit-1">
-              <IconTrash size={16} />Delete</Button>
+              <IconTrash size={16} />Delete
+            </Button>
           </CardFooter>
         </Card>
       ))

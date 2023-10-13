@@ -1,5 +1,5 @@
 "use client"
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast';
 
@@ -14,53 +14,64 @@ import { Card, CardBody } from '@nextui-org/card';
 
 import { IconDeviceFloppy } from "@tabler/icons-react";
 
-export default function NewRoutinePage({ params }) {
+export default function EditRoutine({ params }){
+    const editId = params.id;
+
     const [routineName, setRoutineName] = useState('');
     const [notes, setNotes] = useState('');
     const [selectedExercises, setSelectedExercises] = useState([]);
-    const router = useRouter()
+    const router = useRouter();
+
+    useEffect(() => {
+        const fetchRoutineDetails = async () => {
+            try {
+                const response = await fetch(`/api/routines/${editId}`);
+                const data = await response.json();
+                console.log("Routine details from API:", data);
+                if (response.ok) {
+                    setRoutineName(data.name);
+                    setNotes(data.notes);
+                    setSelectedExercises(data.WorkoutPlanExercise);
+                } else {
+                    toast.error("Failed to fetch routine details.");
+                }
+            } catch (error) {
+                toast.error("An error occurred while fetching routine details.");
+            }
+        };
+        
+        fetchRoutineDetails();
+    }, [editId]);
 
     const handleSave = async () => {
-        if (!routineName.trim()) {
-            toast.error("Routine Name is required!");
-            return;
-        }
-    
-        if (selectedExercises.length === 0) {
-            toast.error("Please select at least one exercise!");
-            return;
-        }
-    
-        const data = {
-            routineName,
-            notes,
-            exercises: selectedExercises
-        };
-    
+
         try {
-            const response = await fetch('/api/routines', {
-                method: 'POST',
+            const response = await fetch(`/api/routines/${editId}`, {
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(data)
+                body: JSON.stringify({
+                    routineName,
+                    notes,
+                    exercises: selectedExercises
+                })
             });
-    
+
             if (response.ok) {
-                const result = await response.json();
-                toast.success("Routine saved successfully!");
-                router.push("/routines")
+                toast.success("Routine updated successfully!");
+                router.push("/routines");
             } else {
-                toast.error("Failed to save routine.");
+                toast.error("Failed to update routine.");
             }
         } catch (error) {
             toast.error("An unexpected error occurred.");
         }
     }
 
-    return (
+    return(
         <>
-            <PageHeading title="New Routine" />
+            <PageHeading title="Edit Routine" />
             <Card className='mb-5'>
                 <CardBody>
             <Input 
@@ -91,5 +102,5 @@ export default function NewRoutinePage({ params }) {
                 <IconDeviceFloppy size={16} />Save Routine
             </Button>
         </>
-    );
+    )
 }

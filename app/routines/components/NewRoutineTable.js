@@ -29,7 +29,7 @@ export default function NewRoutineTable({ selectedExercises, setSelectedExercise
                 <TableBody emptyContent={"No Exercises selected. Click Add Exercises to get started."}>
                     {selectedExercises.map((exercise, index) => (
                         <TableRow key={index}>
-                            <TableCell>{exercise.name}</TableCell>
+                            <TableCell>{exercise.Exercise ? exercise.Exercise.name : exercise.name}</TableCell>
                             <TableCell>
                                 <Input 
                                     type="number" 
