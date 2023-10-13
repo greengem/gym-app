@@ -1,12 +1,15 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from 'next/navigation'
+import toast from 'react-hot-toast';
+
+import NextLink from "next/link";
 import {
   Table, TableHeader, TableBody, TableColumn, TableRow, TableCell,
   Card, CardHeader, CardBody, CardFooter,
-  Button, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure, Image, Divider, Input, Link,
+  Button, Divider, Input, Link,
 } from "@nextui-org/react";
-import NextLink from "next/link";
+
 import { IconPlus, IconDeviceFloppy, IconTrash } from '@tabler/icons-react';
 
 function ExerciseSet({ exerciseItem, workoutData, handleValueChange, handleAddSet, handleDeleteLastSet }) {
@@ -26,10 +29,17 @@ function ExerciseSet({ exerciseItem, workoutData, handleValueChange, handleAddSe
               <TableRow key={setIndex}>
                 <TableCell>{setIndex + 1}</TableCell>
                 <TableCell>
-                  <Input type="number" onChange={(e) => handleValueChange('weight', exerciseItem.Exercise.id, setIndex, e.target.value)} />
+                  <Input 
+                    type="number" 
+                    onChange={(e) => handleValueChange('weight', exerciseItem.Exercise.id, setIndex, e.target.value)} 
+                  />
                 </TableCell>
                 <TableCell>
-                  <Input type="number" onChange={(e) => handleValueChange('reps', exerciseItem.Exercise.id, setIndex, e.target.value)} />
+                  <Input 
+                    type="number" 
+                    value={set.reps}
+                    onChange={(e) => handleValueChange('reps', exerciseItem.Exercise.id, setIndex, e.target.value)} 
+                  />
                 </TableCell>
               </TableRow>
             ))}
@@ -50,9 +60,10 @@ function ExerciseSet({ exerciseItem, workoutData, handleValueChange, handleAddSe
 }
 
 function Workout({ workout }) {
+  const router = useRouter();
   const [workoutData, setWorkoutData] = useState(workout.WorkoutPlanExercise.map(e => ({
     id: e.Exercise.id,
-    sets: Array.from({ length: e.sets }).map((_, idx) => ({ setId: idx, weight: null, reps: null }))
+    sets: Array.from({ length: e.sets }).map((_, idx) => ({ setId: idx, weight: null, reps: e.reps }))
   })));
 
   const handleValueChange = (type, exerciseId, setId, value) => {
@@ -117,12 +128,13 @@ function Workout({ workout }) {
       const responseData = await response.json();
   
       if (response.ok) {
+        toast.success('Workout saved successfully!');
         router.push("/activity")
       } else {
-        console.error('Failed to save workout:', responseData.error);
+        toast.error('Failed to save workout.');
       }
     } catch (error) {
-      console.error('An error occurred while saving the workout:', error);
+      toast.error('An error occurred while saving the workout:');
     }
   };
 

@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect, useCallback } from 'react';
+import toast from 'react-hot-toast';
 
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
 import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell } from "@nextui-org/table";
@@ -74,6 +75,7 @@ function NewRoutineModal({ setSelectedExercises }) {
                                                             duration: 0
                                                         };
                                                         setSelectedExercises(prevExercises => [...prevExercises, newExercise]);
+                                                        toast.success("Exercise added!");
                                                         onClose();
                                                     }}
                                                 >

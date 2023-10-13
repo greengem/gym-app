@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useRouter } from 'next/navigation'
 import FormattedDate from '@/app/components/FormattedDate'
+import toast from 'react-hot-toast';
 
 import NextImage from "next/image";
 import {
@@ -34,7 +35,7 @@ async function deleteRoutine(routineId) {
     }
 
   } catch (error) {
-    console.error('Client error deleting routine:', error);
+    toast.error('Failed to delete routine from server.');
   }
 }
 
@@ -54,8 +55,9 @@ function RoutineList({ routines }) {
     try {
       await deleteRoutine(selectedRoutineId);
       router.refresh();
+      toast.success('Routine deleted successfully!');
     } catch (error) {
-      console.error("Failed to delete:", error);
+      toast.error('Failed to delete routine.');
     }
     setSelectedRoutineId(null);
     onClose();

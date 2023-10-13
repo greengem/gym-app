@@ -1,6 +1,7 @@
 "use client"
 import { useState } from 'react';
 import { useRouter } from 'next/navigation'
+import toast from 'react-hot-toast';
 
 import PageHeading from "../../components/PageHeading";
 import NewRoutineTable from "./NewRoutineTable";
@@ -21,12 +22,12 @@ export default function NewRoutinePage() {
 
     const handleSave = async () => {
         if (!routineName.trim()) {
-            alert("Routine Name is required!");
+            toast.error("Routine Name is required!");
             return;
         }
     
         if (selectedExercises.length === 0) {
-            alert("Please select at least one exercise!");
+            toast.error("Please select at least one exercise!");
             return;
         }
     
@@ -47,12 +48,13 @@ export default function NewRoutinePage() {
     
             if (response.ok) {
                 const result = await response.json();
+                toast.success("Routine saved successfully!");
                 router.push("/routines")
             } else {
-                alert("Failed to save routine.");
+                toast.error("Failed to save routine.");
             }
         } catch (error) {
-            console.error("An error occurred:", error);
+            toast.error("An unexpected error occurred.");
         }
     }
     

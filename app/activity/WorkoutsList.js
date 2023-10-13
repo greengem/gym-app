@@ -2,6 +2,7 @@
 import React from "react";
 import { useRouter } from 'next/navigation'
 import FormattedDate from '@/app/components/FormattedDate'
+import toast from 'react-hot-toast';
 
 import NextLink from "next/link";
 import NextImage from "next/image";
@@ -24,22 +25,21 @@ import { useDisclosure } from "@nextui-org/react";
 import { IconInfoCircle, IconTrash } from '@tabler/icons-react';
 
 async function deleteWorkout(workoutId) {
-    console.log('Attempting to delete workout with ID:', workoutId);
     try {
       const response = await fetch(`/api/workouts/${workoutId}`, {
         method: 'DELETE',
       });
 
-      const responseData = await response.json();
-      console.log('Response from server:', responseData);
-      
-      if (!response.ok) {
-        throw new Error('Failed to delete workout');
-      }
+    if (response.ok) {
+        toast.success('Workout deleted successfully!');
+    } else {
+        toast.error('Failed to delete workout');
+    }
+    
       return true;
   
     } catch (error) {
-      console.error('Error deleting workout:', error);
+        toast.error('Error deleting workout.');
       return false;
     }
 }
@@ -60,8 +60,11 @@ function WorkoutsList({ workouts }) {
             onClose();
             setSelectedWorkout(null);
             router.refresh();
+        } else {
+            toast.error('Failed to delete workout. Try again later.');
         }
     };
+    
 
     return (
         <>

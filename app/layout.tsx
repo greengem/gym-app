@@ -3,7 +3,9 @@ import {Providers} from "./providers";
 import type { Metadata } from 'next'
 import { getServerSession } from 'next-auth'
 import SessionProvider from './components/SessionProvider'
+import Sidebar from "@/app/components/Sidebar"
 import NavMenu from './components/NavMenu'
+import { Toaster } from 'react-hot-toast';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -23,7 +25,16 @@ export default async function RootLayout({
       <body>
         <SessionProvider session={session}>
           <Providers>
-              {children}
+          <main className="flex flex-col min-h-screen">
+          <Toaster />
+            <div className="flex flex-grow">
+              <Sidebar />
+              <div className="ml-0 lg:ml-64 flex-1 px-5">
+                <NavMenu />
+                {children}
+              </div>
+            </div>
+          </main>
           </Providers>
         </SessionProvider>
       </body>

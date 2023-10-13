@@ -28,8 +28,6 @@ async function fetchWorkout(id) {
                 order: true,
               }
             },
-            createdAt: true,
-            updatedAt: true,
           }
     });
 }
