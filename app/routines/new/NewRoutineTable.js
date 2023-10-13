@@ -1,6 +1,8 @@
 "use client";
 import { Table,  TableHeader,  TableBody,  TableColumn,  TableRow,  TableCell } from "@nextui-org/table";
 import {Input} from "@nextui-org/input";
+import { Button } from "@nextui-org/react";
+import { IconTrash } from "@tabler/icons-react";
 
 export default function NewRoutineTable({ selectedExercises, setSelectedExercises }) {
     const updateExerciseValues = (index, key, value) => {
@@ -8,14 +10,21 @@ export default function NewRoutineTable({ selectedExercises, setSelectedExercise
         updatedExercises[index][key] = value;
         setSelectedExercises(updatedExercises);
     };
+
+    const deleteExercise = (indexToDelete) => {
+        const updatedExercises = selectedExercises.filter((_, index) => index !== indexToDelete);
+        setSelectedExercises(updatedExercises);
+    };
+
     return (
         <>
             <Table removeWrapper aria-label="Table of Exercises for new Routine.">
                 <TableHeader>
-                    <TableColumn>Exercise</TableColumn>
-                    <TableColumn>Sets</TableColumn>
-                    <TableColumn>Reps</TableColumn>
-                    <TableColumn>Time</TableColumn>
+                    <TableColumn>EXERCISE</TableColumn>
+                    <TableColumn>SETS</TableColumn>
+                    <TableColumn>REPS</TableColumn>
+                    <TableColumn>TIME</TableColumn>
+                    <TableColumn></TableColumn>
                 </TableHeader>
                 <TableBody emptyContent={"No Exercises selected. Click Add Exercises to get started."}>
                     {selectedExercises.map((exercise, index) => (
@@ -44,6 +53,15 @@ export default function NewRoutineTable({ selectedExercises, setSelectedExercise
                                     value={exercise.duration}
                                     onChange={e => updateExerciseValues(index, 'duration', parseInt(e.target.value))}
                                 />
+                            </TableCell>
+                            <TableCell>
+                                <Button 
+                                    size="sm" 
+                                    color="danger" 
+                                    isIconOnly
+                                    onClick={() => deleteExercise(index)}
+                                    ><IconTrash />
+                                </Button>
                             </TableCell>
                         </TableRow>
                     ))}
