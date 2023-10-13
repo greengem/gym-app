@@ -1,9 +1,7 @@
-import { PrismaClient } from '@prisma/client'
+import prisma from '@/lib/prisma';
 
 import PageHeading from "../../components/PageHeading";
 import Workout from "./Workout";
-
-const prisma = new PrismaClient()
 
 async function fetchWorkout(id) {
     return await prisma.workoutPlan.findUnique({
