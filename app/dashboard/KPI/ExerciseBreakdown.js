@@ -73,7 +73,7 @@ export default function KPIExerciseBreakdown() {
         <p className="text-small text-default-500">Distribution of Exercise Types</p>
       </div>
     </CardHeader>
-      <CardBody className='p-3' style={{ height: '221px' }}>
+      <CardBody className='p-3'>
         <Pie data={data} options={options} />
       </CardBody>
       <CardFooter>

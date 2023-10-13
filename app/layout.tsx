@@ -3,8 +3,8 @@ import {Providers} from "./providers";
 import type { Metadata } from 'next'
 import { getServerSession } from 'next-auth'
 import SessionProvider from './components/SessionProvider'
-import Sidebar from "@/app/components/Sidebar"
-import NavMenu from './components/NavMenu'
+import Sidebar from '@/app/components/Sidebar'
+import NavMenu from '@/app/components/NavMenu'
 import { Toaster } from 'react-hot-toast';
 
 export const metadata: Metadata = {

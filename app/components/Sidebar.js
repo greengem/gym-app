@@ -93,15 +93,12 @@ export default function Sidebar() {
           </div>
           <Divider />
           <div className="px-5 py-5"><ThemeSwitcher /></div>
-
           <div className="absolute bottom-0 left-0 right-0">
             <Divider />
               <div className="px-5 py-3">
                 <UserDetail />
               </div>
             </div>
-
-
         </div>
     </div>
   );
