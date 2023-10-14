@@ -70,7 +70,7 @@ function RoutineList({ routines }) {
     {routines.length > 0 ? 
       routines.map((routine) => (
         <Card key={routine.id}>
-          <CardHeader className="flex gap-3">
+          <CardHeader className="flex gap-3 bg-gray-800">
             <Image
               as={NextImage}
               alt="Workout Icon"
@@ -84,7 +84,6 @@ function RoutineList({ routines }) {
               <p className="text-small text-default-500">Last updated: <FormattedDate dateString={routine.updatedAt} /></p>
             </div>
           </CardHeader>
-          <Divider />
           <CardBody className="px-3">
             {routine.notes && (
               <Accordion isCompact>
@@ -112,7 +111,6 @@ function RoutineList({ routines }) {
               </TableBody>
             </Table>
           </CardBody>
-          <Divider />
           <CardFooter>
             <Link as={NextLink} href={`/routines/${routine.id}`}> 
               <Button size="sm" color="secondary" className="gap-unit-1 mr-2">

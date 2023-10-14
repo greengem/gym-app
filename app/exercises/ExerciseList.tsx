@@ -109,7 +109,7 @@ const levelColorMap: { [key in LevelType]: "success" | "warning" | "danger" } = 
 
 function ExerciseList({ exercises }: ExerciseListProps): JSX.Element {
   const [page, setPage] = useState(1);
-  const rowsPerPage = 8;
+  const rowsPerPage = 10;
   const [filters, setFilters] = useState({ category: null, muscleGroup: null });
   const [searchQuery, setSearchQuery] = useState("");
 

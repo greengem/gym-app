@@ -71,7 +71,7 @@ function WorkoutsList({ workouts }) {
             {workouts.length > 0 ? 
             workouts.map((workout) => (
                 <Card key={workout.id}>
-                    <CardHeader className="flex gap-3">
+                    <CardHeader className="flex gap-3 bg-gray-800">
                         <Image
                             as={NextImage}
                             alt="nextui logo"
@@ -85,7 +85,6 @@ function WorkoutsList({ workouts }) {
                             <p className="text-small text-default-500"><FormattedDate dateString={workout.date} /></p>
                         </div>
                     </CardHeader>
-                    <Divider/>
                     <CardBody className="px-3">
                         <Table hideHeader removeWrapper aria-label="Workout table">
                             <TableHeader>
@@ -108,7 +107,6 @@ function WorkoutsList({ workouts }) {
                             </TableBody>
                         </Table>
                     </CardBody>
-                    <Divider/>
                     <CardFooter>
                         <Button size="sm" className="gap-unit-1 mr-2" color="secondary" onPress={() => handleMoreDetailsClick(workout)}>
                             <IconInfoCircle size={16} />More Details

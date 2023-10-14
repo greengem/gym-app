@@ -13,9 +13,11 @@ import {
   IconLogout,
 } from "@tabler/icons-react";
 import { Divider } from '@nextui-org/divider';
-import {Image} from "@nextui-org/react";
+import {Button, Image} from "@nextui-org/react";
 import NextImage from "next/image";
 import { ThemeSwitcher } from "@/app/components/ThemeSwitcher";
+
+import { IconPlayerPause, IconPlayerPlay, IconPlayerStop } from "@tabler/icons-react";
 
 export default function Sidebar() {
   const pathname = usePathname()
@@ -92,8 +94,19 @@ export default function Sidebar() {
           </Listbox>
           </div>
           <Divider />
-          <div className="px-5 py-5"><ThemeSwitcher /></div>
+          <div className="text-center p-5">
+            <p className="text-warning">Workout Paused</p>
+            <p className="text-6xl mt-2 mb-4">48:32</p>
+            <div className="flex gap-2 justify-center">
+              <Button isDisabled color="success" isIconOnly><IconPlayerPlay /></Button>
+              <Button color="warning" isIconOnly><IconPlayerPause /></Button>
+              <Button color="danger" isIconOnly><IconPlayerStop /></Button>
+            </div>
+          </div>
+          <Divider />
+
           <div className="absolute bottom-0 left-0 right-0">
+          <div className="px-5 py-5"><ThemeSwitcher /></div>
             <Divider />
               <div className="px-5 py-3">
                 <UserDetail />

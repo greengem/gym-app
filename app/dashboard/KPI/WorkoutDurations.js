@@ -37,7 +37,7 @@ export default function KPIWorkoutDurations() {
 
   return (
     <div>
-    <CardHeader className="flex gap-3">
+    <CardHeader className="flex gap-3 bg-gray-800">
       <Image
         as={NextImage}
         alt="nextui logo"

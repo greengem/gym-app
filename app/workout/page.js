@@ -58,7 +58,7 @@ export default async function WorkoutPage() {
             {routines.length > 0 ? 
                 routines.map(routine => (
                         <Card key={routine.id}>
-                            <CardHeader className="flex gap-3">
+                            <CardHeader className="flex gap-3 bg-gray-800">
                                 <Image
                                     height={40}
                                     radius="sm"
@@ -71,7 +71,6 @@ export default async function WorkoutPage() {
                                     <p className="text-small text-default-500">Last updated: <FormattedDate dateString={routine.updatedAt} /></p>
                                 </div>
                             </CardHeader>
-                            <Divider />
                             <CardBody>
                                 <ol className="text-sm list-decimal list-inside">
                                     {routine.WorkoutPlanExercise.map((exerciseDetail) => (
@@ -81,7 +80,6 @@ export default async function WorkoutPage() {
                                     ))}
                                 </ol>
                             </CardBody>
-                            <Divider />
                             <CardFooter>
                                 <Link as={NextLink} href={`/workout/${routine.id}`}>
                                     <Button size="sm" color="primary" className="gap-unit-1">
