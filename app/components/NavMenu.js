@@ -66,12 +66,9 @@ export default function NavMenu() {
               <Link color="primary" href="/" as={NextLink}>
                 <IconBarbell className="mr-1" />
               </Link>
-              <Link color="foreground" href="/" as={NextLink}>
-                SyncStrength
-              </Link>
           </NavbarBrand>
-          <ThemeSwitcher />
           <NavbarContent as="div" justify="end">
+            <ThemeSwitcher />
             <AuthButton />
             <AvatarDropdown />
           </NavbarContent>

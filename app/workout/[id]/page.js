@@ -1,6 +1,5 @@
 import prisma from '@/lib/prisma';
 
-import PageHeading from "../../components/PageHeading";
 import Workout from "./Workout";
 
 async function fetchWorkout(id) {
@@ -35,8 +34,6 @@ export default async function StartWorkoutPage({ params }) {
 
     return (
         <>
-            <PageHeading title={workout.name} />
-            <div className="text-sm text-gray-500 mb-2">notes: {workout.notes}</div>
             <Workout workout={workout} />
         </>
     );

@@ -3,22 +3,6 @@ import prisma from '@/lib/prisma';
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/route";
 
-// DELETE
-export async function DELETE(req, context) {
-  const params = context.params;
-
-  try {
-    await prisma.workoutPlan.delete({
-      where: {
-        id: params.id,
-      },
-    });
-    return NextResponse.json({ message: "Routine deleted successfully." });
-  } catch (error) {
-    return NextResponse.json({ error: "Error deleting the routine." });
-  }
-}
-
 // GET
 export async function GET(request, { params }) {
   const { id } = params;
@@ -99,5 +83,21 @@ export async function PUT(request, { params }) {
   } catch (error) {
     console.error("Error:", error);
     return NextResponse.json({ error: "An error occurred updating the routine." }, { status: 500 });
+  }
+}
+
+// DELETE
+export async function DELETE(req, context) {
+  const params = context.params;
+
+  try {
+    await prisma.workoutPlan.delete({
+      where: {
+        id: params.id,
+      },
+    });
+    return NextResponse.json({ message: "Routine deleted successfully." });
+  } catch (error) {
+    return NextResponse.json({ error: "Error deleting the routine." });
   }
 }

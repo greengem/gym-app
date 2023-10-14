@@ -3,6 +3,9 @@ import { useState } from "react";
 import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast';
 
+import NavControls from "./NavControls"
+import PageHeading from "../../components/PageHeading";
+
 import NextLink from "next/link";
 import {
   Table, TableHeader, TableBody, TableColumn, TableRow, TableCell,
@@ -139,6 +142,10 @@ function Workout({ workout }) {
   };
 
   return (
+    <>
+    <NavControls onSave={completeWorkout} />
+    <PageHeading title={workout.name} />
+    {workout.notes && <div className="text-sm text-gray-500 mb-2">notes: {workout.notes}</div>}
     <div className="pb-5">
       {workout.WorkoutPlanExercise.map((exerciseItem, index) => (
         <ExerciseSet 
@@ -150,15 +157,8 @@ function Workout({ workout }) {
           handleDeleteLastSet={handleDeleteLastSet}
         />
       ))}
-      <Button color="success" onClick={completeWorkout} className="mr-2 gap-unit-1">
-        <IconDeviceFloppy size={16} />Complete Workout
-      </Button>
-      <Link as={NextLink} href="/workout">
-        <Button color="danger" variant="ghost">
-          Cancel Workout
-        </Button>
-      </Link>
     </div>
+    </>
   );
 }
 
