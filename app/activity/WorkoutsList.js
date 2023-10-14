@@ -87,7 +87,7 @@ function WorkoutsList({ workouts }) {
                     </CardHeader>
                     <Divider/>
                     <CardBody className="px-3">
-                        <Table removeWrapper aria-label="Workout table">
+                        <Table hideHeader removeWrapper aria-label="Workout table">
                             <TableHeader>
                                 <TableColumn>Exercise</TableColumn>
                                 <TableColumn>Best Set</TableColumn>

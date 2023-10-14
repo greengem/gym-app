@@ -1,73 +1,18 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 
-import NavControls from "./NavControls"
+import NavControls from "./NavControls";
 import PageHeading from "../../components/PageHeading";
+import ExerciseSet from "./ExerciseSet";
+import { transformExerciseData } from './helpers';
 
-import NextLink from "next/link";
-import {
-  Table, TableHeader, TableBody, TableColumn, TableRow, TableCell,
-  Card, CardHeader, CardBody, CardFooter,
-  Button, Divider, Input, Link,
-} from "@nextui-org/react";
-
-import { IconPlus, IconDeviceFloppy, IconTrash } from '@tabler/icons-react';
-
-function ExerciseSet({ exerciseItem, workoutData, handleValueChange, handleAddSet, handleDeleteLastSet }) {
-  return (
-    <Card className="mb-5" key={exerciseItem.Exercise.id}>
-      <CardHeader>{exerciseItem.Exercise.name}</CardHeader>
-      <Divider />
-      <CardBody>
-        <Table removeWrapper aria-label="Workout Table">
-          <TableHeader>
-            <TableColumn>SET</TableColumn>
-            <TableColumn>KG</TableColumn>
-            <TableColumn>REPS</TableColumn>
-          </TableHeader>
-          <TableBody>
-            {workoutData.find(e => e.id === exerciseItem.Exercise.id).sets.map((set, setIndex) => (
-              <TableRow key={setIndex}>
-                <TableCell>{setIndex + 1}</TableCell>
-                <TableCell>
-                  <Input 
-                    type="number" 
-                    onChange={(e) => handleValueChange('weight', exerciseItem.Exercise.id, setIndex, e.target.value)} 
-                  />
-                </TableCell>
-                <TableCell>
-                  <Input 
-                    type="number" 
-                    value={set.reps}
-                    onChange={(e) => handleValueChange('reps', exerciseItem.Exercise.id, setIndex, e.target.value)} 
-                  />
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </CardBody>
-      <Divider />
-      <CardFooter>
-        <Button size="sm" color="secondary" onClick={() => handleAddSet(exerciseItem.Exercise.id)} className="gap-unit-1 mr-2">
-          <IconPlus size={16} />Add Set
-        </Button>
-        <Button size="sm" color="danger" onClick={() => handleDeleteLastSet(exerciseItem.Exercise.id)} className="gap-unit-1">
-          <IconTrash size={16} />Delete Last Set
-        </Button>
-      </CardFooter>
-    </Card>
-  );
-}
-
-function Workout({ workout }) {
+const Workout = ({ workout }) => {
   const router = useRouter();
-  const [workoutData, setWorkoutData] = useState(workout.WorkoutPlanExercise.map(e => ({
-    id: e.Exercise.id,
-    sets: Array.from({ length: e.sets }).map((_, idx) => ({ setId: idx, weight: null, reps: e.reps }))
-  })));
+
+  const [workoutData, setWorkoutData] = useState(transformExerciseData(workout));
+  const [duration, setDuration] = useState(0);
 
   const handleValueChange = (type, exerciseId, setId, value) => {
     setWorkoutData(prevData => {
@@ -112,7 +57,9 @@ function Workout({ workout }) {
     });
   };
 
-  const completeWorkout = async () => {
+
+  const completeWorkout = async (receivedTime) => {
+    setDuration(receivedTime);
     try {
       const response = await fetch('/api/workouts/', { 
         method: 'POST',
@@ -123,7 +70,7 @@ function Workout({ workout }) {
           name: workout.name,
           date: new Date().toISOString(),
           workoutPlanId: workout.id,
-          duration: 60,
+          duration: receivedTime,
           exercises: workoutData
         })
       });
@@ -143,23 +90,35 @@ function Workout({ workout }) {
 
   return (
     <>
-    <NavControls onSave={completeWorkout} />
-    <PageHeading title={workout.name} />
-    {workout.notes && <div className="text-sm text-gray-500 mb-2">notes: {workout.notes}</div>}
-    <div className="pb-5">
-      {workout.WorkoutPlanExercise.map((exerciseItem, index) => (
-        <ExerciseSet 
-          key={index}
-          exerciseItem={exerciseItem}
-          workoutData={workoutData}
-          handleValueChange={handleValueChange}
-          handleAddSet={handleAddSet}
-          handleDeleteLastSet={handleDeleteLastSet}
-        />
-      ))}
-    </div>
+      <NavControls onSave={completeWorkout} />
+      <PageHeading title={workout.name} />
+      {workout.notes && <Notes notes={workout.notes} />}
+      <ExerciseList
+        exercises={workout.WorkoutPlanExercise}
+        workoutData={workoutData}
+        handleValueChange={handleValueChange}
+        handleAddSet={handleAddSet}
+        handleDeleteLastSet={handleDeleteLastSet}
+      />
     </>
   );
-}
+};
+
+const Notes = ({ notes }) => <div className="text-sm text-gray-500 mb-2">notes: {notes}</div>;
+
+const ExerciseList = ({ exercises, workoutData, handleValueChange, handleAddSet, handleDeleteLastSet }) => (
+  <div className="pb-5">
+    {exercises.map((exerciseItem, index) => (
+      <ExerciseSet 
+        key={index}
+        exerciseItem={exerciseItem}
+        workoutData={workoutData}
+        handleValueChange={handleValueChange}
+        handleAddSet={handleAddSet}
+        handleDeleteLastSet={handleDeleteLastSet}
+      />
+    ))}
+  </div>
+);
 
 export default Workout;

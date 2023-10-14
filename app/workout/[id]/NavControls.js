@@ -4,7 +4,7 @@ import { Navbar, NavbarContent } from "@nextui-org/navbar";
 import { Button } from "@nextui-org/button";
 import { IconPlayerPlay, IconPlayerPause, IconPlayerStop, IconDeviceFloppy } from "@tabler/icons-react";
 
-export default function NavControls({ onSave }) {
+export default function NavControls({ onSave, onTimeSave }) {
     const [isActive, setIsActive] = useState(false);
     const [time, setTime] = useState(0);
     const [isStopped, setIsStopped] = useState(false);
@@ -52,11 +52,15 @@ export default function NavControls({ onSave }) {
                     <IconPlayerStop size={20} /> Finish Workout
                 </Button>
                 {
-                    isStopped && 
-                    <Button color="primary" className="gap-unit-1" onClick={onSave}>
-                        <IconDeviceFloppy size={20} /> Save Workout
-                    </Button>
-                }
+    isStopped && (
+        <>
+            <Button color="primary" className="gap-unit-1" onClick={() => {onSave(time);}}>
+                <IconDeviceFloppy size={20} /> Save Workout
+            </Button>
+        </>
+    )
+}
+
 
             </NavbarContent>
             <NavbarContent justify="end">
