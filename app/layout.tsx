@@ -2,8 +2,8 @@ import './globals.css'
 import {Providers} from "./providers";
 import type { Metadata } from 'next'
 import { getServerSession } from 'next-auth'
-import SessionProvider from './components/SessionProvider'
-import Sidebar from '@/app/components/Sidebar'
+import SessionProvider from '@/app/components/SessionProvider'
+import Sidebar from '@/app/components/Sidebar/Sidebar'
 import NavMenu from '@/app/components/NavMenu'
 import { Toaster } from 'react-hot-toast';
 
@@ -25,16 +25,16 @@ export default async function RootLayout({
       <body>
         <SessionProvider session={session}>
           <Providers>
-          <main className="flex flex-col min-h-screen">
-          <Toaster />
-          <NavMenu />
-            <div className="flex flex-grow">
-              <Sidebar />
-              <div className="ml-0 lg:ml-64 flex-1 px-5 main-bg">
-                {children}
+            <main className="flex flex-col min-h-screen">
+            <Toaster />
+            <NavMenu />
+              <div className="flex flex-grow">
+                <Sidebar />
+                <div className="ml-0 lg:ml-64 flex-1 px-5 main-bg">
+                  {children}
+                </div>
               </div>
-            </div>
-          </main>
+            </main>
           </Providers>
         </SessionProvider>
       </body>
