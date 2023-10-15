@@ -3,16 +3,39 @@ import { useState } from "react";
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 
-import NavControls from "./NavControls";
 import PageHeading from "../../components/PageHeading";
 import ExerciseSet from "./ExerciseSet";
 import { transformExerciseData } from './helpers';
+import { useTimer } from '@/app/contexts/TimerContext';
+
+
+import { Button } from "@nextui-org/button";
+import { IconPlayerPlay } from "@tabler/icons-react";
+
+
 
 const Workout = ({ workout }) => {
   const router = useRouter();
-
   const [workoutData, setWorkoutData] = useState(transformExerciseData(workout));
   const [duration, setDuration] = useState(0);
+  const { setTimerData } = useTimer();
+
+  const startWorkoutTimer = async () => {
+    try {
+      const response = await fetch("/api/timer/start", { method: "POST" });
+      const data = await response.json();
+      
+      if (data.success) {
+        setTimerData(data.timer); // Set the timer data using context
+      } else {
+        console.error("Failed to start timer:", data.message);
+      }
+      
+    } catch (error) {
+      console.error("Failed to start timer:", error);
+    }
+  };
+  
 
   const handleValueChange = (type, exerciseId, setId, value) => {
     setWorkoutData(prevData => {
@@ -90,8 +113,10 @@ const Workout = ({ workout }) => {
 
   return (
     <>
-      <NavControls onSave={completeWorkout} />
       <PageHeading title={workout.name} />
+      <Button className="gap-unit-1 mb-5" color="success" size="lg" onClick={startWorkoutTimer}>
+        <IconPlayerPlay />Start Workout
+      </Button>
       {workout.notes && <Notes notes={workout.notes} />}
       <ExerciseList
         exercises={workout.WorkoutPlanExercise}

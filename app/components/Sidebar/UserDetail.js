@@ -1,3 +1,4 @@
+"use client";
 import { useSession } from 'next-auth/react';
 import { User } from "@nextui-org/user";
 

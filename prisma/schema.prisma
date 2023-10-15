@@ -31,6 +31,7 @@ model Session {
   sessionToken String   @unique
   userId       String
   expires      DateTime
+  timer Timer?
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -132,7 +133,21 @@ model SetLog {
   WorkoutLogExercise  WorkoutLogExercise @relation(fields: [workoutLogExerciseId], references: [id], onDelete: Cascade)
 }
 
+model Timer {
+  id             String   @id @default(cuid())
+  sessionId      String   @unique
+  startTime      DateTime @default(now())
+  pauseTime      DateTime?
+  pausedDuration Int      @default(0) // store duration in seconds
+  status         TimerStatus
+  session        Session  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+}
 
+enum TimerStatus {
+  RUNNING
+  PAUSED
+  STOPPED
+}
 
 enum CategoryType {
   strength
