@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 
@@ -18,7 +18,11 @@ const Workout = ({ workout }) => {
   const router = useRouter();
   const [workoutData, setWorkoutData] = useState(transformExerciseData(workout));
   const [duration, setDuration] = useState(0);
-  const { setTimerData } = useTimer();
+  const { timerData, setTimerData } = useTimer();
+
+  useEffect(() => {
+    console.log('Timer component re-rendered with:', timerData);
+  }, [timerData]);
 
   const startWorkoutTimer = async () => {
     try {
@@ -26,7 +30,7 @@ const Workout = ({ workout }) => {
       const data = await response.json();
       
       if (data.success) {
-        setTimerData(data.timer); // Set the timer data using context
+        setTimerData(data.timer);
       } else {
         console.error("Failed to start timer:", data.message);
       }
@@ -35,7 +39,6 @@ const Workout = ({ workout }) => {
       console.error("Failed to start timer:", error);
     }
   };
-  
 
   const handleValueChange = (type, exerciseId, setId, value) => {
     setWorkoutData(prevData => {
@@ -79,7 +82,6 @@ const Workout = ({ workout }) => {
       return [...prevData];
     });
   };
-
 
   const completeWorkout = async (receivedTime) => {
     setDuration(receivedTime);

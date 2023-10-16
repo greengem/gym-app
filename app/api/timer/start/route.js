@@ -61,10 +61,10 @@ export async function POST(request) {
       }
     });
   
-    return new Response(JSON.stringify({ success: true, id: newTimer.id }), {
+    return new Response(JSON.stringify({ success: true, timer: newTimer }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
-    });
+    });    
   
   } catch (error) {
     return new Response(JSON.stringify({ success: false, error: error.message }), {

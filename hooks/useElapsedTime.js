@@ -5,6 +5,8 @@ export function useElapsedTime(timerData, initialTime = 0) {
 
     useEffect(() => {
         if (timerData) {
+            console.log('elapsedTime:', elapsedTime);
+
             const now = new Date().getTime();
             const startTime = new Date(timerData.startTime).getTime();
             const pausedDuration = timerData.pausedDuration * 1000; 
