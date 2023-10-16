@@ -1,4 +1,3 @@
-import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 
@@ -15,11 +14,6 @@ import { IconPlus } from "@tabler/icons-react";
 
 export default async function RoutinesPage() {
   const session = await getServerSession(authOptions);
-
-  if (!session || !session.user) {
-    redirect("/");
-  }
-
   const routines = await fetchRoutines(session.user.id);
 
   return (

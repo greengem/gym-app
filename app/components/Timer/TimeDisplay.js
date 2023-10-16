@@ -1,5 +1,5 @@
 import React from 'react';
-import { formatTime } from '@/utils/formatTime';
+import { formatTime } from '@/utils/FormatTime';
 
 export const TimeDisplay = ({ seconds }) => {
   const formattedTime = formatTime(seconds);

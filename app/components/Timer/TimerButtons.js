@@ -1,19 +1,20 @@
+"use client";
 import React from 'react';
 import { Button } from "@nextui-org/button";
-import { IconPlayerPause, IconPlayerPlay } from "@tabler/icons-react";
+import { IconPlayerPause, IconPlayerPlay, IconPlayerStop } from "@tabler/icons-react";
 
-export const TimerButtons = ({ status, onStart }) => {
-  if (!status || status === 'NOT_STARTED' || status === 'PAUSED') {
-    return (
-      <Button color="success" isIconOnly onClick={onStart}>
+export default function TimerButtons() {
+  return (
+    <div className='flex justify-center mb-5 gap-2'>
+      <Button color='success' isIconOnly>
         <IconPlayerPlay />
       </Button>
-    );
-  } else if (status === 'RUNNING') {
-    return (
-      <Button color="warning" isIconOnly>
+      <Button color='warning' isIconOnly>
         <IconPlayerPause />
       </Button>
-    );
-  }
-};
+      <Button color='danger' isIconOnly>
+        <IconPlayerStop />
+      </Button>
+    </div>
+  )
+}

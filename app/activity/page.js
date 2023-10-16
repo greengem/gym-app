@@ -1,4 +1,3 @@
-import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import { fetchWorkouts } from "@/utils/FetchWorkouts";
@@ -8,11 +7,6 @@ import WorkoutsList from "./WorkoutsList";
 
 export default async function ActivityPage() {
     const session = await getServerSession(authOptions);
-
-    if (!session || !session.user) {
-        redirect("/");
-    }
-
     const workouts = await fetchWorkouts(session.user.id);
 
     return (

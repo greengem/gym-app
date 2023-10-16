@@ -2,16 +2,18 @@
 
 import {NextUIProvider} from '@nextui-org/react'
 import {ThemeProvider as NextThemesProvider} from "next-themes";
-import { TimerProvider } from '@/app/contexts/TimerContext'
+import { StopwatchProvider } from '@/app/contexts/SimpleTimerContext'
 
 export function Providers({children}: { children: React.ReactNode }) {
   return (
+    <StopwatchProvider>
     <NextUIProvider>
       <NextThemesProvider attribute="class" defaultTheme="dark">
-        <TimerProvider>
+        
           {children}
-        </TimerProvider>
+        
       </NextThemesProvider>
     </NextUIProvider>
+    </StopwatchProvider>
   )
 }

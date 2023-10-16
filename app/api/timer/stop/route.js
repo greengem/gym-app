@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/route";
 
 
-// POST
+// DELETE
 
 export async function POST(request) {
   const session = await getServerSession(authOptions);
@@ -37,7 +37,7 @@ export async function POST(request) {
         sessionId: currentSession.id,
         OR: [
           { status: 'RUNNING' },
-          { status: 'PAUSED' }
+          { status: 'PAUSED' },
         ]
       }
     });

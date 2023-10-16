@@ -1,4 +1,3 @@
-import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import prisma from "@/lib/prisma";
@@ -9,7 +8,6 @@ import {Card, CardHeader, CardBody, CardFooter} from "@nextui-org/card";
 import { Button } from "@nextui-org/button";
 import { Image } from "@nextui-org/image"
 import {Link} from "@nextui-org/link";
-import { Divider } from "@nextui-org/divider";
 import NextLink from "next/link";
 
 import { IconPlayerPlay } from '@tabler/icons-react';
@@ -44,11 +42,6 @@ async function fetchRoutines(userId) {
 
 export default async function WorkoutPage() {
     const session = await getServerSession(authOptions);
-
-    if (!session || !session.user) {
-        redirect("/");
-    }
-
     const routines = await fetchRoutines(session.user.id);
 
     return (
